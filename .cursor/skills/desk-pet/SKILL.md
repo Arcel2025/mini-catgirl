@@ -64,7 +64,9 @@ description: >-
 
 用户这句已经是「出一张 / 出图」且 lane 是 插画、静帧或换姿势时，同一回合出图，仍要把那句 lane 放在最前。
 
-色彩锁图在 `参考图/ref_xingye_color_*.jpg`。没有这些文件就用 `星野出图素材/不赖-图` 里不带 App 界面的竖图。不要用本地 ComfyUI + NovaAnime。新图不要默认走几乎没轮廓的厚涂。
+色彩锁图在 `参考图/ref_xingye_color_*.jpg`。没有这些文件就用 `星野出图素材/不赖-图` 里不带 App 界面的竖图。这些只供本地出图，已经 gitignore，不要推进公开仓库。不要用本地 ComfyUI + NovaAnime。新图不要默认走几乎没轮廓的厚涂。
+
+公开 skill 的参考图改走角色设定图（`.cursor/rules/对外发布.mdc`），不要用星野竖图当附件。
 
 ## 出图
 

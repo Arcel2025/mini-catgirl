@@ -44,7 +44,17 @@ python 养成桌宠/prepare_asset.py <生成图> <目标/_候选.png>
 
 ## 插画（迷你猫娘 / 仓鼠娘）
 
-读 `.cursor/rules/迷你猫娘画风.mdc`。默认走星野 **色彩**，用那里的英文 prompt，把 `{SUBJECT}` 换成这次内容。`reference_image_paths` 至少带一张 `参考图/ref_xingye_color_*.jpg`。
+先读 `.cursor/skills/mini-catgirl-body/`（头身四肢耳朵钉死；衣服、发型、眼睛、表情另抽），再读用户点的风格：
+
+| 用户说的 | skill |
+| --- | --- |
+| 没说、色彩 | `mini-catgirl-color` |
+| 多巴胺、老鼠娘 | `mini-catgirl-dopamine` |
+| 厚涂 | `mini-catgirl-impasto` |
+| 勾线、贴纸 | `mini-catgirl-line` |
+| 风格Ⅱ、洛丽塔、抱猫、抱玩偶 | `mini-catgirl-style-2` |
+
+默认仍是色彩。`description` 里不要写星野、Xingye、MiniMax。本地锁按各风格 skill；外发只用脱敏复刻稿。已定稿角色（斑斑 / 兜兜 / 小委屈 / 拖鞋）头身仍跟各自锁图。
 
 人设是奶牛猫时先分清哪只：
 

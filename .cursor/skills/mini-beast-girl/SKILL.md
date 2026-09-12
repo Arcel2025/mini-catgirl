@@ -19,7 +19,7 @@ description: 迷你猫娘/迷你犬娘/迷你兽娘人设、出图和养成。�
 
 | 要做什么 | 读什么 |
 | --- | --- |
-| 出一张插画 / 立绘 | [desk-pet](../desk-pet/SKILL.md)，画风 `.cursor/rules/迷你猫娘画风.mdc`，奶牛斑另加 `奶牛猫出图.mdc` |
+| 出一张插画 / 立绘 | 身子 [mini-catgirl-body](../mini-catgirl-body/SKILL.md)，风格按用户点的（color / dopamine / style-2 / impasto / line）；工序 [desk-pet](../desk-pet/SKILL.md)；已定稿角色另加 `奶牛猫出图.mdc` |
 | 养成窗口、换人物、加菜单 | `养成桌宠/`，工序仍走 desk-pet 的「养成 pack」 |
 
 怎么叠：
@@ -30,3 +30,5 @@ description: 迷你猫娘/迷你犬娘/迷你兽娘人设、出图和养成。�
 4. 需要具体癖好、卡住姿势、到货方式时翻 `reference.md`。定型的可以更靠近那些过街老鼠样本；幼的只借身体喜剧，不借无害化、退货处死。
 
 本仓库剧情立场仍跟 `故事.md`。养成默认走「还能教」那条。
+
+以后要发上 GitHub 的生成 skill 和参考图，做成角色设定图，见 [sheet-format](sheet-format/README.md) 和 `.cursor/rules/对外发布.mdc`。不要把星野／MiniMax 原图推进公开库。

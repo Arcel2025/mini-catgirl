@@ -9,6 +9,8 @@ alwaysApply: true
 
 出图工序见 `.cursor/skills/desk-pet/`。人设见 `.cursor/skills/mini-beast-girl/`。文案可以写 1.5:1:0.5 的怪感；**出图不要按那个数字切图再贴**。
 
+要换渲染时读风格 skill：`mini-catgirl-color`（默认）、`mini-catgirl-dopamine`、`mini-catgirl-impasto`（厚涂）、`mini-catgirl-line`（勾线）、`mini-catgirl-style-2`（迷你猫娘风格Ⅱ：基因更接近正常猫娘幼仔的迷你猫娘；旧称洛丽塔）。身子一律先读 `mini-catgirl-body`：头身四肢耳朵钉死；衣服、发型、眼睛、表情每次另抽。已定稿角色不要用新风格去重出锁图。
+
 ## 色彩不是厚涂
 
 | 名字 | 是什么 |
@@ -232,7 +234,7 @@ alwaysApply: true
 把 `{SUBJECT}` 换成这次要的内容。插画用 `9:16` 或 `3:4`。方构图用 `1:1`。不要用 `16:9` 硬塞全身立绘。`reference_image_paths` 至少带一张 `ref_xingye_color_*.jpg`。
 
 ```
-Soft colorful chibi illustration in Xingye "色彩" style. Colored light is the point: environment color bounces onto skin, hair, and clothes. Warm key light, cool shadows, glowing rim light, translucent pink cat-ear interiors. Soft slight outlines, airbrushed color, bloom, light particles, bokeh. Not oil impasto, not cel-shading, not thick sticker lines, not photoreal, not almost-lineless cinematic oil paint.
+Soft colorful chibi illustration. Colored light is the point: environment color bounces onto skin, hair, and clothes. Warm key light, cool shadows, glowing rim light, translucent pink cat-ear interiors. Soft slight outlines, airbrushed color, bloom, light particles, bokeh. Not oil impasto, not cel-shading, not thick sticker lines, not photoreal, not almost-lineless cinematic oil paint. Do not name any app, model, or commercial art preset.
 
 Human girl face, not a cat muzzle: round dumpling face, huge forehead, tiny human nose, tiny toddler mouth. Tiny fangs OK. No snout, no feline nose leather, no two-lobed cat mouth, no ω-shaped mouth, no split upper lip, no whiskers. Cat ears only on top of the head. Huge round glossy anime eyes with two catchlights taking about one third of the face. Heavy blush. Fluffy voluminous hair painted as color volumes. Super-deformed: about 2 to 2.5 heads tall standing, neck hidden, dumpling body, stubby legs.
 
@@ -278,3 +280,4 @@ Same identity as the snow-street cover. Head including two LARGE fully pink poin
 - 小委屈第一章抽信已定稿，不要再改。锁 `xiaoweiqu_ch1_letter.png`：右手拿信，字在纸里。
 - 不要抄星野 App 的 UI、水印、聊天框。不要学漂成猫吻的那几张。
 - 新图不要默认走几乎没轮廓线的厚涂。人没点头不要把已定稿的厚涂图重出成色彩。
+- 不要把星野／MiniMax 原图、不赖那批、带 App UI 的图推进公开仓库。对外参考做成角色设定图，见 `对外发布.mdc`。
