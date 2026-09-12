@@ -12,11 +12,11 @@ description: >-
 
 基因更接近正常猫娘幼仔的迷你猫娘。
 
-先读 [mini-catgirl-body](../mini-catgirl-body/SKILL.md)，再套本套。旧名「洛丽塔」指向这里，不要再开 `mini-catgirl-lolita`。
+人设先读 [mini-beast-girl](../mini-beast-girl/SKILL.md)。旧名「洛丽塔」指向这里。
 
 比色彩更接近正常猫娘幼仔：头仍偏大，站着大约 **2.5～3 头身**，不是雪锅那种头占大半，也不是 7 头身。耳是幼猫耳，不是发卡，也不是雪锅巨耳。
 
-衣发眼表情从 [wardrobe.md](../mini-catgirl-body/wardrobe.md) 另抽。没说空手时，默认胸前有一只小珍宝（白猫、布偶、或相对过大的食物）。
+衣服、发型、瞳色、表情每次另抽。没说空手时，默认胸前有一只小珍宝（白猫、布偶、或相对过大的食物）。
 
 ## 这套是什么
 

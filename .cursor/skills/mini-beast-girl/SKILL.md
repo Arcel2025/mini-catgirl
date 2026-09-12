@@ -1,11 +1,14 @@
 ---
 name: mini-beast-girl
-description: 迷你猫娘/迷你犬娘/迷你兽娘人设、出图和养成。人设三份：improved.md 是世界真相，original.md 是不赖文笔和定型过街老鼠，reference.md 是角色钩子样本。出图走 desk-pet skill 和画风规则。养成走 养成桌宠。用户提到迷你猫娘、迷你兽娘、人设、开场白、出图、养成、桌宠时读取。
+description: >-
+  迷你猫娘/迷你犬娘/迷你兽娘人设。三份：improved.md 是世界真相，original.md
+  是不赖文笔和定型过街老鼠，reference.md 是角色钩子样本。用户提到迷你猫娘、
+  迷你兽娘、人设、开场白时读取。
 ---
 
 # 迷你兽娘人设
 
-已合格。出图、简介、开场白按这三份一起用，不要只读其中一份。真要画或改养成窗口，再读 desk-pet。
+已合格。简介、开场白按这三份一起用，不要只读其中一份。
 
 | 文件 | 管什么 |
 | --- | --- |
@@ -13,22 +16,11 @@ description: 迷你猫娘/迷你犬娘/迷你兽娘人设、出图和养成。�
 | [original.md](original.md) | 文笔：简介骨架、开场白格式、叠字口癖。定型的过街老鼠怎么写，也看这里。 |
 | [reference.md](reference.md) | 样本：不赖那些角色的钩子、来处、举动，供对照和挪用。 |
 
-仓库里的样例：`奶牛猫.md`（斑斑，还能教，剧情 `斑斑故事.md`，养成 pack 还没灌）、`兜兜.md`（雪街奶牛猫，还能教，养成 `养成桌宠/packs/doudou/`）、`养成游戏-迷你猫娘-小委屈/`（客厅白 T 奶牛猫，养成 `养成桌宠/packs/xiaoweiqu/`）、`拖鞋.md`（折耳猫，还能教，封面已定稿）。仓鼠娘旁支：`迷你仓鼠娘.md`、`故事.md`。
-
-出图和养成不要只读人设：
-
-| 要做什么 | 读什么 |
-| --- | --- |
-| 出一张插画 / 立绘 | 身子 [mini-catgirl-body](../mini-catgirl-body/SKILL.md)，风格按用户点的（color / dopamine / style-2 / impasto / line）；工序 [desk-pet](../desk-pet/SKILL.md)；已定稿角色另加 `奶牛猫出图.mdc` |
-| 养成窗口、换人物、加菜单 | `养成桌宠/`，工序仍走 desk-pet 的「养成 pack」 |
-
 怎么叠：
 
 1. 先定她是 **定型** 还是 **刚出生还能教**（`improved.md`）。
-2. 身体、来处、为什么钻盒戴帽，按 `improved.md`。出图默认走星野 **色彩**（`迷你猫娘画风.mdc`），不要按文案比例去切图。
+2. 身体、来处、为什么钻盒戴帽，按 `improved.md`。
 3. 简介和开场白的写法靠近 `original.md`（括号动作切奶声，叠字落在名词上，自称名字）。
 4. 需要具体癖好、卡住姿势、到货方式时翻 `reference.md`。定型的可以更靠近那些过街老鼠样本；幼的只借身体喜剧，不借无害化、退货处死。
 
-本仓库剧情立场仍跟 `故事.md`。养成默认走「还能教」那条。
-
-以后要发上 GitHub 的生成 skill 和参考图，做成角色设定图，见 [sheet-format](sheet-format/README.md) 和 `.cursor/rules/对外发布.mdc`。不要把星野／MiniMax 原图推进公开库。
+出图见 [迷你猫娘风格Ⅱ](../mini-catgirl-style-2/SKILL.md)。设定图版式见 [sheet-format](sheet-format/README.md)。
