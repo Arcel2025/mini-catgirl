@@ -1,0 +1,28 @@
+[
+  {
+    "id": "feed",
+    "label": "喂食猫粮",
+    "engine": "feed",
+    "still": "eat",
+    "bubble": "啊呜啊呜",
+    "beats": [
+      {"screen": "black", "text": "开饭啦！"},
+      {"still": "eat", "say": true, "text": "好吃好吃！喵！喵！喵！"}
+    ]
+  },
+  {"id": "wash", "label": "擦拭", "engine": "wash"},
+  {"id": "play", "label": "逗一逗", "engine": "play", "still": "happy"},
+  {"id": "start_job", "label": "去打工", "engine": "start_job", "still": "work"},
+  {"id": "stop_job", "label": "收工", "engine": "stop_job"},
+  {"id": "medicine", "label": "吃药", "engine": "medicine"},
+  {"id": "revive", "label": "复活", "engine": "revive", "require": "dead"},
+  {
+    "id": "punish",
+    "label": "惩罚",
+    "children": [
+      {"id": "scold", "label": "训斥", "mood": -12, "bubble": "……", "still": "scold"},
+      {"id": "timeout", "label": "罚站", "mood": -8, "hunger": -4, "bubble": "站着", "still": "timeout"},
+      {"id": "ignore", "label": "不理", "mood": -6, "bubble": "……"}
+    ]
+  }
+]

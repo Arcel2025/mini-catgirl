@@ -1,0 +1,12 @@
+{
+  "id": "doudou",
+  "name": "兜兜",
+  "character": "兜兜",
+  "stills": {
+    "idle": "idle.png",
+    "happy": null,
+    "work": null,
+    "sick": null,
+    "dead": null
+  }
+}

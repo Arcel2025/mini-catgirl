@@ -1,0 +1,13 @@
+{
+  "id": "example",
+  "name": "养成模板",
+  "character": "喵喵",
+  "stills": {
+    "idle": "idle.png",
+    "eat": "eat.png",
+    "happy": null,
+    "work": null,
+    "sick": null,
+    "dead": null
+  }
+}

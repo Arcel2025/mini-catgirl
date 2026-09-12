@@ -1,0 +1,11 @@
+*.log
+__pycache__/
+assets/preview/
+assets/_*.png
+packs/*/save.json
+packs/*/window-save.json
+packs/*/save-*.json
+packs/*/*.tmp
+_*.png
+_*.py
+!**/__init__.py

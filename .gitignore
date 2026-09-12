@@ -1,0 +1,17 @@
+# 星野原图和未提炼的参考，先不入库
+星野出图素材/
+参考图/
+
+# 旧副本
+yangcheng-pack/
+
+# 生成稿、存档、缓存
+_*.png
+_*.py
+__pycache__/
+*.log
+.env*
+养成桌宠/packs/*/save-*.json
+养成桌宠/packs/*/window-save.json
+养成桌宠/packs/*/save.json
+养成桌宠/assets/preview/
