@@ -1,8 +1,10 @@
 # 迷你猫娘
 
-这套 skill 用来给智能体写人设。
+迷你猫娘的灵感来自星野。早年星野上满地都是萌物，各式各样的迷你猫娘就是那一茬的代表。后来这条被限制了，现在还能看见的，多是白子和 Doro。
 
-它不管画画，也不管养成窗口怎么跑。它管的是：这个智能体是谁、怎么动、怎么回话。
+我对迷你猫娘没有偏见。这个概念能被写开、写完整，最大的贡献者是 **不赖**。这里同时放了他原来的设定，和我个人改过的一版。要参考哪份，自己选。
+
+眼下这套 skill 只用来给智能体写人设：她是谁、怎么动、怎么回话。不管画画，也不管养成窗口。
 
 具体是这三块：
 
@@ -14,9 +16,9 @@
 
 | 文件 | 管什么 |
 | --- | --- |
-| [improved.md](.cursor/skills/mini-beast-girl/improved.md) | 世界真相：育种、身体、窝、定型还是还能教 |
-| [original.md](.cursor/skills/mini-beast-girl/original.md) | 文笔：简介骨架、开场白、叠字；定型的过街老鼠也看这里 |
-| [reference.md](.cursor/skills/mini-beast-girl/reference.md) | 样本：不赖那些角色的钩子、来处、举动 |
+| [improved.md](.cursor/skills/mini-beast-girl/improved.md) | 我改过的一版：世界真相，育种、身体、窝、定型还是还能教 |
+| [original.md](.cursor/skills/mini-beast-girl/original.md) | 不赖原来的文笔：简介骨架、开场白、叠字；定型的过街老鼠也看这里 |
+| [reference.md](.cursor/skills/mini-beast-girl/reference.md) | 不赖那些角色的钩子、来处、举动 |
 
 先在改良版里定她走哪条路，身体和来处按改良版，句子按原始版，缺具体癖好再翻样本。
 
