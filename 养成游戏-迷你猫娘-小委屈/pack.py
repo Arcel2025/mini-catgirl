@@ -4,7 +4,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from life.types import Option, option_from_dict, walk_options
+from life.types import Option, option_from_dict, walk_beats, walk_options
 
 
 @dataclass(frozen=True)
@@ -73,7 +73,7 @@ def load_pack(root: Path, pack_id: str | None = None) -> Pack:
     for option in walk_options(options):
         if option.still and option.still not in keys:
             keys.append(option.still)
-        for beat in option.beats:
+        for beat in walk_beats(option.beats):
             if beat.still and beat.still not in keys:
                 keys.append(beat.still)
     for key in keys:

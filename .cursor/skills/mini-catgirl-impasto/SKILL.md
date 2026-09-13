@@ -24,7 +24,7 @@ description: >-
 - [examples/example-paws.png](examples/example-paws.png) 人身猫爪，绿卫衣坐
 - [examples/example-sailor.png](examples/example-sailor.png) 人身猫爪，蓝发水手
 
-出图 `reference_image_paths` 带这三张。
+出图 `reference_image_paths` 最多两张：人身或人身猫爪里选一张当风格锁，角色另有定稿再加一张。不要三张例图一起塞。不要带界面截图。路径用英文目录，中文路径会 400。
 
 ## 这套是什么
 

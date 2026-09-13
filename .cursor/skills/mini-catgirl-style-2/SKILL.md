@@ -43,7 +43,7 @@ description: >-
 | 卫衣 | `locks/lock-hoodie.png` | `sheets/sheet-hoodie.png` | 褐双马尾、琥珀眼含泪、白卫衣、抱蓝兔 |
 | 茶杯 | `locks/lock-tea.png` | `sheets/sheet-tea.png` | 银长卷、蓝眼一线嘴、白裙、坐进玫瑰茶杯抱三明治 |
 
-出新图：质感、头身锁这四只。衣服发型可以另抽，不要把色彩雪锅/探箱带进 `reference_image_paths`。
+出新图：质感、头身从四只里只带一张肖像。衣服发型可以另抽。不要四只一起塞进 `reference_image_paths`，不要把风格Ⅰ的雪锅/探箱带进去。路径用英文目录，中文路径会 400。
 
 设定图版式只借 [sheet-format](../mini-beast-girl/sheet-format/README.md)，不借里面的大衣女、披风人。
 

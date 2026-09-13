@@ -16,13 +16,12 @@ from life.core import new_save
 from life.session import LifeSession
 from life.slots import list_slots, slot_path
 from life.store import JsonFileStore
-from life.types import Option, SceneBeat, beat_speech, walk_options
+from life.types import Option, SceneBeat, SceneChoice, beat_speech, walk_options
 from pack import load_pack
 
 ROOT = Path(os.path.dirname(os.path.abspath(__file__)))
 DEMO_HUNGER = 30.0
 PANEL_W = 328
-BEAT_MS = 1400
 FADE_MS = 40
 FADE_STEPS = 36
 TITLE_HOLD_MS = 400
@@ -106,6 +105,7 @@ class RaiseWindow:
         )
         inner = tk.Frame(self.dialog, bg=DIALOG_BG)
         inner.pack(fill=tk.BOTH, expand=True, padx=16, pady=12)
+        inner.bind("<Button-1>", self._on_stage_click)
         self.dialog_who = tk.Label(
             inner,
             text="",
@@ -140,6 +140,24 @@ class RaiseWindow:
         self.dialog_who.bind("<Button-1>", self._on_stage_click)
         self.dialog_body.bind("<Button-1>", self._on_stage_click)
         self.dialog_hint.bind("<Button-1>", self._on_stage_click)
+
+        self.choice = tk.Frame(
+            self.stage,
+            bg=DIALOG_BG,
+            highlightbackground=DIALOG_LINE,
+            highlightthickness=1,
+        )
+        self.choice_prompt = tk.Label(
+            self.choice,
+            text="",
+            bg=DIALOG_BG,
+            fg=TEXT,
+            font=self.dialog_name_font,
+            justify=tk.CENTER,
+        )
+        self.choice_prompt.pack(fill=tk.X, padx=18, pady=(14, 8))
+        self.choice_btns = tk.Frame(self.choice, bg=DIALOG_BG)
+        self.choice_btns.pack(fill=tk.X, padx=18, pady=(0, 14))
 
         tk.Label(
             side,
@@ -260,6 +278,7 @@ class RaiseWindow:
         self._mode = "title_fade"
         self._title_alpha = 0.0
         self._hide_dialog()
+        self._hide_choice()
         self.title_bar.place_forget()
         self._draw_title_frame()
         self.root.after(TITLE_HOLD_MS, self._fade_title)
@@ -509,7 +528,13 @@ class RaiseWindow:
         self._scene_gen += 1
         self._set_menu_locked(True)
         self.art.config(cursor="hand2")
+        self._hide_choice()
         self._show_beat()
+
+    def _current_beat(self) -> SceneBeat | None:
+        if not self._scene or self._scene_i >= len(self._scene):
+            return None
+        return self._scene[self._scene_i]
 
     def _show_beat(self) -> None:
         if self._scene_i >= len(self._scene):
@@ -524,8 +549,14 @@ class RaiseWindow:
             self._draw_art(beat.still)
             self._shown_still = beat.still
             self.still_var.set(f"当前立绘  {beat.still}")
-        who, line = beat_speech(beat, self.pack.character)
-        self._show_dialog(who, line)
+        if beat.text or beat.who:
+            who, line = beat_speech(beat, self.pack.character)
+            self._show_dialog(who, line)
+        if beat.choices:
+            self.dialog_hint.config(text="")
+            self._show_choice(beat.prompt or "", beat.choices)
+            return
+        self._hide_choice()
         last = self._scene_i >= len(self._scene) - 1
         self.dialog_hint.config(text="" if last else "▼")
         if last:
@@ -533,19 +564,12 @@ class RaiseWindow:
             self._set_menu_locked(False)
             self._playing = False
             self.art.config(cursor="arrow")
-            return
-        gen = self._scene_gen
-        self.root.after(BEAT_MS, lambda: self._auto_advance(gen))
-
-    def _auto_advance(self, gen: int) -> None:
-        if gen != self._scene_gen or not self.root.winfo_exists():
-            return
-        if self._scene_i >= len(self._scene) - 1:
-            return
-        self._advance_scene()
 
     def _on_stage_click(self, _event: tk.Event | None = None) -> None:
         if self._mode != "play" or not self._scene:
+            return
+        beat = self._current_beat()
+        if beat is None or beat.choices:
             return
         if self._scene_i >= len(self._scene) - 1:
             return
@@ -560,8 +584,52 @@ class RaiseWindow:
         self._playing = False
         self._scene_gen += 1
         self.art.config(cursor="arrow")
+        self._hide_choice()
         self._set_menu_locked(False)
         self.refresh(log=self._scene_log)
+
+    def _show_choice(self, prompt: str, choices: tuple[SceneChoice, ...]) -> None:
+        self.choice_prompt.config(text=prompt)
+        for child in self.choice_btns.winfo_children():
+            child.destroy()
+        for choice in choices:
+            btn = tk.Button(
+                self.choice_btns,
+                text=choice.label,
+                font=self.ui_font,
+                bg=BTN,
+                fg=TEXT,
+                activebackground=ACCENT,
+                activeforeground=TEXT,
+                relief=tk.FLAT,
+                bd=0,
+                padx=18,
+                pady=7,
+                cursor="hand2",
+                command=lambda item=choice: self._pick_choice(item),
+            )
+            btn.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=4)
+        self.choice.place(relx=0.5, rely=1.0, relwidth=0.56, anchor="s", y=-160)
+        self.choice.lift()
+
+    def _hide_choice(self) -> None:
+        self.choice.place_forget()
+
+    def _pick_choice(self, choice: SceneChoice) -> None:
+        if self.session is not None and choice.set_flag:
+            self.session.save.flags[choice.set_flag] = 1
+            self.session.store.dump(self.session.save)
+        self._hide_choice()
+        self._scene_gen += 1
+        self._scene = choice.beats
+        self._scene_i = 0
+        if not self._scene:
+            self._end_scene()
+            return
+        self._playing = True
+        self._set_menu_locked(True)
+        self.art.config(cursor="hand2")
+        self._show_beat()
 
     def _show_dialog(self, who: str | None, line: str) -> None:
         if who:
@@ -578,6 +646,7 @@ class RaiseWindow:
 
     def _hide_dialog(self) -> None:
         self.dialog.place_forget()
+        self._hide_choice()
 
     def _set_menu_locked(self, locked: bool) -> None:
         if self.session is None:

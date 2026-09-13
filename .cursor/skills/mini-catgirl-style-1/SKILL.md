@@ -38,7 +38,7 @@ description: >-
 - [examples/example-street-v3.png](examples/example-street-v3.png) 卷帘门白 T
 - [examples/example-street-v4.png](examples/example-street-v4.png) 店门口粉长发
 
-出图 `reference_image_paths` 带这些。不要带界面截图。
+出图 `reference_image_paths` 最多两张：一张本条例图，一张角色定稿。不要把例图清单全塞进去。不要带界面截图。路径用英文目录，中文路径会 400。
 
 ## 英文模板
 
@@ -74,9 +74,12 @@ A real navigable space with depth, not a pattern wallpaper. Character centered s
 A stray mini catgirl on a real night street or alley. She is tiny. Shop or lamp light colors her face. Full body. One character only.
 ```
 
+第一人称成人手：迷你猫娘约 20cm，整段身子大约等于一只成人手（腕到指尖）。头大约一只拳头。两指就能拎起来。不要画成手掌那么大。
+
 ## QA
 
 1. 光有颜色，脸和衣服吃到环境色
 2. 背景是地方，不是色场
 3. 人身，两侧没有人耳
 4. 没有 UI
+5. 若有成人手：她约 20cm，整只 ≈ 一只手长

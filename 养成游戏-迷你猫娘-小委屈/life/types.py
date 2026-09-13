@@ -20,6 +20,13 @@ class Command:
 
 
 @dataclass(frozen=True)
+class SceneChoice:
+    label: str
+    beats: tuple["SceneBeat", ...] = ()
+    set_flag: str | None = None
+
+
+@dataclass(frozen=True)
 class SceneBeat:
     """窗口演出一拍。screen=black 为黑屏；say 则对白带角色名。"""
 
@@ -28,6 +35,8 @@ class SceneBeat:
     text: str = ""
     say: bool = False
     who: str | None = None
+    prompt: str | None = None
+    choices: tuple[SceneChoice, ...] = ()
 
 
 def beat_from_dict(data: dict) -> SceneBeat:
@@ -35,13 +44,40 @@ def beat_from_dict(data: dict) -> SceneBeat:
     if screen not in ("black",):
         screen = None
     who = data.get("who")
+    prompt = data.get("prompt")
+    choices = []
+    for item in data.get("choices") or []:
+        if not isinstance(item, dict):
+            continue
+        nested = tuple(
+            beat_from_dict(beat)
+            for beat in (item.get("beats") or [])
+            if isinstance(beat, dict)
+        )
+        flag = item.get("set_flag")
+        choices.append(
+            SceneChoice(
+                label=str(item.get("label") or "选项"),
+                beats=nested,
+                set_flag=str(flag) if flag else None,
+            )
+        )
     return SceneBeat(
         screen=screen,
         still=data.get("still"),
         text=str(data.get("text") or ""),
         say=bool(data.get("say")),
         who=str(who) if who else None,
+        prompt=str(prompt) if prompt else None,
+        choices=tuple(choices),
     )
+
+
+def walk_beats(beats: tuple[SceneBeat, ...] | list[SceneBeat]):
+    for beat in beats:
+        yield beat
+        for choice in beat.choices:
+            yield from walk_beats(choice.beats)
 
 
 def beat_speech(beat: SceneBeat, name: str) -> tuple[str | None, str]:

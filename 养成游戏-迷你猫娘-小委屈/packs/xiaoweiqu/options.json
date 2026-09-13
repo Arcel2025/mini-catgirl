@@ -39,7 +39,40 @@
       {"who": "迷你猫娘", "text": "喵喵……不好吃……不要……伤害……喵喵……呜呜呜呜"},
 
       {"still": "ch1-letter", "text": "箱子底下压着一封信。我抽出来看。"},
-      {"still": "ch1-standlook", "who": "内心", "text": "呵呵，真有意思。"}
+      {"still": "ch1-standlook", "who": "内心", "text": "呵呵，真有意思。"},
+      {"still": "ch1-standlook", "who": "迷你猫娘", "text": "喵喵？ 什么……有意思？"},
+      {
+        "prompt": "是否收养她？",
+        "choices": [
+          {
+            "label": "是",
+            "set_flag": "adopted",
+            "beats": [
+              {"still": "ch1-standlook", "who": "我", "text": "进来吧"},
+              {"still": "ch1-standlook", "who": "迷你猫娘", "text": "真的吗？窝……窝马上进来（说着奋力爬出纸箱）"},
+              {"still": "ch1-fall", "who": "迷你猫娘", "text": "哎哟！（头一沉，摔了个狗啃泥）"},
+              {"still": "ch1-fall", "who": "迷你猫娘", "text": "窝……窝很快的（颤颤巍巍爬起来）"},
+              {"still": "ch1-fall", "who": "迷你猫娘", "text": "（顾不上疼痛，迈着小短腿屁颠屁颠跑到纸箱后面）"},
+              {"still": "ch1-pushbox", "who": "迷你猫娘", "text": "嘿……呀……用力……"},
+              {"still": "ch1-pushbox", "who": "迷你猫娘", "text": "加压……喵喵……你可以的……（连耳朵都在发力）"},
+              {"still": "ch1-pushbox", "text": "纸箱只是挪动了一点点。"},
+              {"still": "ch1-pushbox-cry", "who": "迷你猫娘", "text": "呜呜呜……为什么……"},
+              {"still": "ch1-pushbox-cry", "who": "迷你猫娘", "text": "坏窝窝！快点动喵！（更加努力地推箱子）"},
+              {"still": "ch1-pushbox-cry", "who": "我", "text": "（被她滑稽的样子逗笑了）"},
+              {"still": "ch1-pushbox-cry", "who": "我", "text": "我帮你一把"},
+              {"still": "ch1-lift", "who": "我", "text": "（轻松把箱子和她拎起来）"},
+              {"still": "ch1-lift", "who": "迷你猫娘", "text": "喵？"},
+              {"still": "ch1-lift", "who": "迷你猫娘", "text": "窝和窝窝怎么飞起来了？（似乎不理解发生了）"},
+              {"still": "ch1-lift", "who": "迷你猫娘", "text": "咦？（用小手擦眼泪）"}
+            ]
+          },
+          {
+            "label": "否",
+            "set_flag": "refused",
+            "beats": []
+          }
+        ]
+      }
     ]
   },
   {

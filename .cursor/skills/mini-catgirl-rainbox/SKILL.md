@@ -21,7 +21,7 @@ description: >-
 - [examples/example-stand.png](examples/example-stand.png) 全身，雨里站，空箱在后
 - [examples/example-box.png](examples/example-box.png) 躲进湿纸箱，白毛小手搭沿
 
-出图 `reference_image_paths` 带这两张。
+出图 `reference_image_paths` 最多两张：全身或箱子里选一张当风格锁，角色另有定稿再加一张。不要两张风格例图再加角色。不要带界面截图。路径用英文目录，中文路径会 400。
 
 ## 这套是什么
 

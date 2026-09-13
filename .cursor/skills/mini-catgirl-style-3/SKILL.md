@@ -41,7 +41,7 @@ description: >-
 - [examples/example-cat-desk.png](examples/example-cat-desk.png) 猫娘，夜书桌俯视，台灯作业本
 - [examples/example-mouse-desk.png](examples/example-mouse-desk.png) 鼠娘，夜书桌俯视，台灯作业本
 
-出图 `reference_image_paths` 带这些。不要带界面截图。
+出图 `reference_image_paths` 最多两张：一张本条例图，一张角色定稿。不要把例图清单全塞进去。不要带界面截图。路径用英文目录，中文路径会 400。
 
 ## 英文模板
 
