@@ -37,10 +37,7 @@ description: >-
 
 ## 例图
 
-- [examples/example-cat-sit.jpg](examples/example-cat-sit.jpg) 猫娘坐，黄星卫衣
-- [examples/example-cat-stand.jpg](examples/example-cat-stand.jpg) 猫娘站，黄背带
 - [examples/example-mouse-stand.png](examples/example-mouse-stand.png) 鼠娘站，蓝卫衣，黄星底
-- [examples/example-mouse-pair.jpg](examples/example-mouse-pair.jpg) 鼠娘叠坐，蓝水手
 - [examples/example-cat-desk.png](examples/example-cat-desk.png) 猫娘，夜书桌俯视，台灯作业本
 - [examples/example-mouse-desk.png](examples/example-mouse-desk.png) 鼠娘，夜书桌俯视，台灯作业本
 
