@@ -68,6 +68,11 @@ class RaiseWindow:
         self._scene_i = 0
         self._scene_gen = 0
         self._scene_log = ""
+        self._fading = False
+        self._fade_alpha = 0.0
+        self._fade_gen = 0
+        self._fade_src: Image.Image | None = None
+        self._frame_rgb: Image.Image | None = None
         self._build()
         self.root.update_idletasks()
         self.root.after(80, self._begin_title)
@@ -75,6 +80,7 @@ class RaiseWindow:
     def _build(self) -> None:
         self.ui_font = _pick_font(11)
         self.title_font = _pick_font(16, "bold")
+        self.card_font = _pick_font(28, "bold")
         self.stat_font = _pick_font(12)
         self.small_font = _pick_font(10)
         self.dialog_name_font = _pick_font(12, "bold")
@@ -96,6 +102,15 @@ class RaiseWindow:
         self.art.bind("<Button-1>", self._on_stage_click)
         self.stage.bind("<Button-1>", self._on_stage_click)
 
+        self.card_label = tk.Label(
+            self.stage,
+            text="",
+            bg="#000000",
+            fg=TEXT,
+            font=self.card_font,
+            justify="center",
+        )
+
         self.dialog = tk.Frame(
             self.stage,
             bg=DIALOG_BG,
@@ -116,6 +131,15 @@ class RaiseWindow:
         )
         self.dialog_row = tk.Frame(inner, bg=DIALOG_BG)
         self.dialog_row.pack(fill=tk.BOTH, expand=True)
+        self.dialog_hint = tk.Label(
+            self.dialog_row,
+            text="▼",
+            bg=DIALOG_BG,
+            fg=MUTED,
+            font=self.small_font,
+            anchor="se",
+        )
+        self.dialog_hint.pack(side=tk.RIGHT, padx=(8, 0), pady=(12, 0))
         self.dialog_body = tk.Label(
             self.dialog_row,
             text="",
@@ -127,15 +151,6 @@ class RaiseWindow:
             anchor="nw",
         )
         self.dialog_body.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        self.dialog_hint = tk.Label(
-            self.dialog_row,
-            text="▼",
-            bg=DIALOG_BG,
-            fg=MUTED,
-            font=self.small_font,
-            anchor="se",
-        )
-        self.dialog_hint.pack(side=tk.RIGHT, padx=(8, 0), pady=(12, 0))
         self.dialog.bind("<Button-1>", self._on_stage_click)
         self.dialog_who.bind("<Button-1>", self._on_stage_click)
         self.dialog_body.bind("<Button-1>", self._on_stage_click)
@@ -167,7 +182,7 @@ class RaiseWindow:
             font=self.title_font,
             anchor="w",
         ).pack(fill=tk.X, padx=18, pady=(18, 4))
-        tk.Label(
+        self.side_hint = tk.Label(
             side,
             text="点一项互动，立绘和数字会一起变。",
             bg=PANEL,
@@ -176,7 +191,8 @@ class RaiseWindow:
             anchor="w",
             wraplength=280,
             justify=tk.LEFT,
-        ).pack(fill=tk.X, padx=18, pady=(0, 12))
+        )
+        self.side_hint.pack(fill=tk.X, padx=18, pady=(0, 12))
 
         self.still_var = tk.StringVar(value="当前立绘  idle")
         tk.Label(
@@ -210,8 +226,10 @@ class RaiseWindow:
         ).pack(fill=tk.X, padx=18, pady=(8, 12))
 
         tk.Frame(side, bg=LINE, height=1).pack(fill=tk.X, padx=18, pady=(0, 10))
+        self.interact_box = tk.Frame(side, bg=PANEL)
+        self.interact_box.pack(fill=tk.X)
         tk.Label(
-            side,
+            self.interact_box,
             text="互动",
             bg=PANEL,
             fg=MUTED,
@@ -219,7 +237,7 @@ class RaiseWindow:
             anchor="w",
         ).pack(fill=tk.X, padx=18, pady=(0, 6))
 
-        menu = tk.Frame(side, bg=PANEL)
+        menu = tk.Frame(self.interact_box, bg=PANEL)
         menu.pack(fill=tk.X, padx=14)
         self.buttons: dict[str, tk.Button] = {}
         for option in self.pack.options:
@@ -416,6 +434,20 @@ class RaiseWindow:
             self._enter_play("第一章")
             self._start_scene(intro.beats, "第一章")
             return
+        flags = self.session.save.flags
+        daily = int(flags.get("daily_life", 0)) > 0
+        ch1_done = int(flags.get("ch1_done", 0)) > 0
+        adopted = int(flags.get("adopted", 0)) > 0
+        if not daily and (ch1_done or adopted):
+            if not ch1_done:
+                self.session.save.flags["ch1_done"] = 1
+                self.session.store.dump(self.session.save)
+            self._enter_play("第一章结束")
+            self._start_scene(
+                (SceneBeat(screen="black", card="第一章结束"),),
+                "第一章结束",
+            )
+            return
         hunger = self.session.save.vitals.hunger
         self._enter_play(f"进来了。饥饿 {hunger:.0f}/100，点「喂食猫粮」看立绘和数字一起变。")
 
@@ -522,6 +554,7 @@ class RaiseWindow:
 
     def _start_scene(self, beats: tuple[SceneBeat, ...], log: str) -> None:
         self._playing = True
+        self._fading = False
         self._scene = beats
         self._scene_i = 0
         self._scene_log = log
@@ -529,6 +562,7 @@ class RaiseWindow:
         self._set_menu_locked(True)
         self.art.config(cursor="hand2")
         self._hide_choice()
+        self._hide_card()
         self._show_beat()
 
     def _current_beat(self) -> SceneBeat | None:
@@ -541,6 +575,27 @@ class RaiseWindow:
             self._end_scene()
             return
         beat = self._scene[self._scene_i]
+        self._apply_beat_flag(beat)
+        if beat.still and self.session is not None:
+            self.session.save.last_still = beat.still
+            self.session.store.dump(self.session.save)
+        if beat.screen == "fade-black":
+            self._hide_dialog()
+            self._hide_card()
+            self._start_fade_black()
+            return
+        if beat.card:
+            self._hide_dialog()
+            self._hide_choice()
+            self._draw_black()
+            self._show_card(beat.card)
+            self._shown_still = None
+            self.still_var.set("当前立绘  （黑屏）")
+            self._set_menu_locked(True)
+            self._playing = True
+            self.art.config(cursor="hand2" if self._has_next_chapter() else "arrow")
+            return
+        self._hide_card()
         if beat.screen == "black":
             self._draw_black()
             self._shown_still = None
@@ -566,10 +621,13 @@ class RaiseWindow:
             self.art.config(cursor="arrow")
 
     def _on_stage_click(self, _event: tk.Event | None = None) -> None:
-        if self._mode != "play" or not self._scene:
+        if self._mode != "play" or not self._scene or self._fading:
             return
         beat = self._current_beat()
         if beat is None or beat.choices:
+            return
+        if beat.card and self._scene_i >= len(self._scene) - 1:
+            self._continue_after_chapter()
             return
         if self._scene_i >= len(self._scene) - 1:
             return
@@ -580,11 +638,76 @@ class RaiseWindow:
         self._scene_i += 1
         self._show_beat()
 
+    def _apply_beat_flag(self, beat: SceneBeat) -> None:
+        if self.session is None or not beat.set_flag:
+            return
+        self.session.save.flags[beat.set_flag] = 1
+        self.session.store.dump(self.session.save)
+
+    def _chapter_option(self, chapter_id: str) -> Option | None:
+        for option in self.pack.options:
+            if option.id == chapter_id and option.beats:
+                return option
+        return None
+
+    def _has_next_chapter(self) -> bool:
+        return self._chapter_option("ch2") is not None
+
+    def _continue_after_chapter(self) -> None:
+        nxt = self._chapter_option("ch2")
+        if nxt is None:
+            return
+        if self.session is not None:
+            self.session.act(nxt)
+        self._start_scene(nxt.beats, "第二章")
+
+    def _start_fade_black(self) -> None:
+        src = self._frame_rgb
+        if src is None:
+            self._fading = False
+            self._advance_scene()
+            return
+        self._fading = True
+        self._fade_alpha = 0.0
+        self._fade_src = src.copy()
+        self._fade_gen = self._scene_gen
+        self._run_fade_black()
+
+    def _run_fade_black(self) -> None:
+        if not self.root.winfo_exists() or self._fade_gen != self._scene_gen:
+            self._fading = False
+            return
+        assert self._fade_src is not None
+        self._fade_alpha = min(1.0, self._fade_alpha + 1.0 / FADE_STEPS)
+        box_w = max(self.art.winfo_width(), 200)
+        box_h = max(self.art.winfo_height(), 200)
+        src = self._fade_src
+        if src.size != (box_w, box_h):
+            src = src.resize((box_w, box_h), Image.Resampling.LANCZOS)
+        black = Image.new("RGB", src.size, (0, 0, 0))
+        shown = Image.blend(src, black, self._fade_alpha)
+        self._show_rgb(shown)
+        if self._fade_alpha >= 1.0:
+            self._fading = False
+            self._advance_scene()
+            return
+        self.root.after(FADE_MS, self._run_fade_black)
+
+    def _show_card(self, text: str) -> None:
+        self.card_label.config(text=text)
+        self.card_label.place(relx=0.5, rely=0.46, anchor="center")
+        self.card_label.lift()
+
+    def _hide_card(self) -> None:
+        self.card_label.place_forget()
+
     def _end_scene(self) -> None:
         self._playing = False
+        self._fading = False
         self._scene_gen += 1
         self.art.config(cursor="arrow")
         self._hide_choice()
+        self._hide_card()
         self._set_menu_locked(False)
         self.refresh(log=self._scene_log)
 
@@ -631,6 +754,37 @@ class RaiseWindow:
         self.art.config(cursor="hand2")
         self._show_beat()
 
+    def _dialog_wraplength(self) -> int:
+        stage_w = max(self.stage.winfo_width(), 240)
+        box_w = max(int(stage_w * 0.90), 200)
+        return max(160, box_w - 88)
+
+    def _layout_dialog(self) -> None:
+        wrap = self._dialog_wraplength()
+        self.dialog_body.config(wraplength=wrap)
+        self.dialog.place(
+            relx=0.05,
+            rely=1.0,
+            relwidth=0.90,
+            height=128,
+            anchor="sw",
+            y=-16,
+        )
+        self.dialog.update_idletasks()
+        who_h = self.dialog_who.winfo_reqheight() if self.dialog_who.winfo_ismapped() else 0
+        body_h = max(self.dialog_body.winfo_reqheight(), 36)
+        stage_h = max(self.stage.winfo_height(), 200)
+        height = min(max(128, who_h + body_h + 40), int(stage_h * 0.48))
+        self.dialog.place(
+            relx=0.05,
+            rely=1.0,
+            relwidth=0.90,
+            height=height,
+            anchor="sw",
+            y=-16,
+        )
+        self.dialog.lift()
+
     def _show_dialog(self, who: str | None, line: str) -> None:
         if who:
             self.dialog_who.config(text=who)
@@ -639,10 +793,7 @@ class RaiseWindow:
             self.dialog_who.config(text="")
             self.dialog_who.pack_forget()
         self.dialog_body.config(text=line)
-        width = max(self.stage.winfo_width(), 240)
-        self.dialog_body.config(wraplength=max(160, width - 120))
-        self.dialog.place(relx=0.05, rely=1.0, relwidth=0.90, height=128, anchor="sw", y=-16)
-        self.dialog.lift()
+        self._layout_dialog()
 
     def _hide_dialog(self) -> None:
         self.dialog.place_forget()
@@ -684,9 +835,25 @@ class RaiseWindow:
             self.log.config(text=text)
         if not self._playing:
             self._set_menu_locked(False)
+        self._sync_daily_menu()
         if redraw and not self._playing:
             self._draw_art(view.still)
             self._shown_still = view.still
+
+    def _daily_life_open(self) -> bool:
+        return (
+            self.session is not None
+            and int(self.session.save.flags.get("daily_life", 0)) > 0
+        )
+
+    def _sync_daily_menu(self) -> None:
+        if self._daily_life_open():
+            self.side_hint.config(text="点一项互动，立绘和数字会一起变。")
+            if not self.interact_box.winfo_ismapped():
+                self.interact_box.pack(fill=tk.X, before=self.log)
+            return
+        self.side_hint.config(text="剧情还在进行。过日子菜单还没开。")
+        self.interact_box.pack_forget()
 
     def _find_option(self, option_id: str) -> Option | None:
         for option in walk_options(self.pack.options):
@@ -702,27 +869,32 @@ class RaiseWindow:
         if self._mode != "play":
             self._draw_title_frame()
             return
-        if self.session is None:
+        if self.session is None or self._fading:
             return
         if self._scene and self._scene_i < len(self._scene):
             beat = self._scene[self._scene_i]
-            if beat.screen == "black":
+            if beat.card or beat.screen == "black":
                 self._draw_black()
+                if beat.card:
+                    self._show_card(beat.card)
             elif beat.still:
                 self._draw_art(beat.still)
-            width = max(self.stage.winfo_width(), 240)
-            self.dialog_body.config(wraplength=max(160, width - 120))
+            if self.dialog.winfo_ismapped():
+                self._layout_dialog()
             return
         view = self.session.view()
         self._draw_art(view.still)
         self._shown_still = view.still
 
+    def _show_rgb(self, canvas: Image.Image) -> None:
+        self._frame_rgb = canvas
+        self.photo = ImageTk.PhotoImage(canvas)
+        self.art.config(image=self.photo)
+
     def _draw_black(self) -> None:
         box_w = max(self.art.winfo_width(), 200)
         box_h = max(self.art.winfo_height(), 200)
-        canvas = Image.new("RGB", (box_w, box_h), (0, 0, 0))
-        self.photo = ImageTk.PhotoImage(canvas)
-        self.art.config(image=self.photo)
+        self._show_rgb(Image.new("RGB", (box_w, box_h), (0, 0, 0)))
 
     def _draw_art(self, key: str) -> None:
         path = self.pack.still(key)
@@ -736,8 +908,7 @@ class RaiseWindow:
         fitted = source.resize((new_w, new_h), Image.Resampling.LANCZOS)
         canvas = Image.new("RGB", (box_w, box_h), (14, 13, 12))
         canvas.paste(fitted, ((box_w - new_w) // 2, (box_h - new_h) // 2))
-        self.photo = ImageTk.PhotoImage(canvas)
-        self.art.config(image=self.photo)
+        self._show_rgb(canvas)
 
     def _tick(self) -> None:
         if not self.root.winfo_exists() or self._mode != "play" or self.session is None:

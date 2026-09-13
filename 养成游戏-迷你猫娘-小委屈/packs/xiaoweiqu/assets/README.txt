@@ -11,3 +11,5 @@ ch1-fall.png 爬出箱子摔狗啃泥
 ch1-pushbox.png 推还翻着的纸箱
 ch1-pushbox-cry.png 推箱哭红脸
 ch1-lift.png 两指提箱、两指拎衣领
+ch1-balcony.png 空杂物阳台（已定稿）
+ch1-balcony-corner.png 阳台角落局部放大：她坐正方形纸箱里（已定稿）

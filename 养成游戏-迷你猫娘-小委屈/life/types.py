@@ -28,7 +28,7 @@ class SceneChoice:
 
 @dataclass(frozen=True)
 class SceneBeat:
-    """窗口演出一拍。screen=black 为黑屏；say 则对白带角色名。"""
+    """窗口演出一拍。screen=black 为黑屏，fade-black 为渐黑；card 是黑屏中央字。"""
 
     screen: str | None = None
     still: str | None = None
@@ -37,14 +37,18 @@ class SceneBeat:
     who: str | None = None
     prompt: str | None = None
     choices: tuple[SceneChoice, ...] = ()
+    card: str | None = None
+    set_flag: str | None = None
 
 
 def beat_from_dict(data: dict) -> SceneBeat:
     screen = data.get("screen")
-    if screen not in ("black",):
+    if screen not in ("black", "fade-black"):
         screen = None
     who = data.get("who")
     prompt = data.get("prompt")
+    card = data.get("card")
+    beat_flag = data.get("set_flag")
     choices = []
     for item in data.get("choices") or []:
         if not isinstance(item, dict):
@@ -70,6 +74,8 @@ def beat_from_dict(data: dict) -> SceneBeat:
         who=str(who) if who else None,
         prompt=str(prompt) if prompt else None,
         choices=tuple(choices),
+        card=str(card) if card else None,
+        set_flag=str(beat_flag) if beat_flag else None,
     )
 
 

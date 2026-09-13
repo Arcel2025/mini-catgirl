@@ -63,7 +63,18 @@
               {"still": "ch1-lift", "who": "我", "text": "（轻松把箱子和她拎起来）"},
               {"still": "ch1-lift", "who": "迷你猫娘", "text": "喵？"},
               {"still": "ch1-lift", "who": "迷你猫娘", "text": "窝和窝窝怎么飞起来了？（似乎不理解发生了）"},
-              {"still": "ch1-lift", "who": "迷你猫娘", "text": "咦？（用小手擦眼泪）"}
+              {"still": "ch1-lift", "who": "迷你猫娘", "text": "咦？（用小手擦眼泪）"},
+              {"still": "ch1-lift", "who": "我", "text": "（走回屋里，并关上门）"},
+              {"still": "ch1-lift", "who": "迷你猫娘", "text": "喵呜~人人要带喵喵去哪？（好奇地打量四周）"},
+              {"still": "ch1-lift", "who": "我", "text": "（没有回复，拎着她和纸箱走到阳台）"},
+              {"still": "ch1-balcony", "who": "我", "text": "你住这里（把她和纸箱放在阳台的角落，旁边还有一盆盆栽）"},
+              {"still": "ch1-balcony-corner", "who": "迷你猫娘", "text": "喵喵……（害怕地看着四周）"},
+              {"still": "ch1-balcony-corner", "who": "迷你猫娘", "text": "那人人呢……喵喵……会乖乖的……（用力抽鼻子，努力把眼泪憋回去）"},
+              {"still": "ch1-balcony-corner", "who": "迷你猫娘", "text": "喵喵……怕黑……（声音越来越微弱）"},
+              {"still": "ch1-balcony-corner", "who": "我", "text": "（没有答复，只是关上了阳台门，然后走开了）"},
+              {"still": "ch1-balcony-corner", "who": "迷你猫娘", "text": "喵喵……会乖乖的……"},
+              {"screen": "fade-black"},
+              {"screen": "black", "card": "第一章结束", "set_flag": "ch1_done"}
             ]
           },
           {
@@ -78,6 +89,7 @@
   {
     "id": "feed",
     "label": "喂食猫粮",
+    "need_flag": "daily_life",
     "engine": "feed",
     "still": "eat",
     "bubble": "啊呜啊呜",
@@ -89,6 +101,7 @@
   {
     "id": "wash",
     "label": "擦拭",
+    "need_flag": "daily_life",
     "engine": "wash",
     "beats": [
       {"text": "白 T 下摆全是地毯毛。她把项圈捂紧。"},
@@ -98,6 +111,7 @@
   {
     "id": "play",
     "label": "逗一逗",
+    "need_flag": "daily_life",
     "engine": "play",
     "still": "happy",
     "beats": [
@@ -105,17 +119,18 @@
       {"say": true, "text": "鞋鞋……委屈的喵。"}
     ]
   },
-  {"id": "start_job", "label": "去茶几底下钻", "engine": "start_job", "still": "work"},
-  {"id": "stop_job", "label": "收工", "engine": "stop_job"},
-  {"id": "medicine", "label": "吃药", "engine": "medicine"},
-  {"id": "revive", "label": "复活", "engine": "revive", "require": "dead"},
+  {"id": "start_job", "label": "去茶几底下钻", "engine": "start_job", "still": "work", "need_flag": "daily_life"},
+  {"id": "stop_job", "label": "收工", "engine": "stop_job", "need_flag": "daily_life"},
+  {"id": "medicine", "label": "吃药", "engine": "medicine", "need_flag": "daily_life"},
+  {"id": "revive", "label": "复活", "engine": "revive", "require": "dead", "need_flag": "daily_life"},
   {
     "id": "punish",
     "label": "惩罚",
+    "need_flag": "daily_life",
     "children": [
-      {"id": "scold", "label": "训斥", "mood": -12, "bubble": "……", "still": "scold"},
-      {"id": "timeout", "label": "罚站", "mood": -8, "hunger": -4, "bubble": "站着", "still": "timeout"},
-      {"id": "ignore", "label": "不理", "mood": -6, "bubble": "……"}
+      {"id": "scold", "label": "训斥", "mood": -12, "bubble": "……", "still": "scold", "need_flag": "daily_life"},
+      {"id": "timeout", "label": "罚站", "mood": -8, "hunger": -4, "bubble": "站着", "still": "timeout", "need_flag": "daily_life"},
+      {"id": "ignore", "label": "不理", "mood": -6, "bubble": "……", "need_flag": "daily_life"}
     ]
   }
 ]
