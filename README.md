@@ -4,10 +4,11 @@
 
 我对迷你猫娘没有偏见。这个概念能被写开、写完整，最大的贡献者是 **不赖**。这里同时放了他原来的设定，和我个人改过的一版。要参考哪份，自己选。
 
-公开库现在就两套 skill：
+公开库现在这些 skill：
 
 - **人设**：[mini-beast-girl](.cursor/skills/mini-beast-girl/SKILL.md)。她是谁、怎么动、怎么回话。
-- **出图**：[迷你猫娘风格Ⅱ](.cursor/skills/mini-catgirl-style-2/SKILL.md)。基因更接近正常猫娘幼仔的迷你猫娘。
+- **出图·风格Ⅱ**：[迷你猫娘风格Ⅱ](.cursor/skills/mini-catgirl-style-2/SKILL.md)。基因更接近正常猫娘幼仔的迷你猫娘。
+- **出图·雨箱**：[迷你猫娘·雨箱](.cursor/skills/mini-catgirl-rainbox/SKILL.md)。夜雨，全身或躲进纸箱。
 
 养成窗口和其他画风不在这个仓库。
 
