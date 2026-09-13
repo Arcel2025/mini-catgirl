@@ -23,4 +23,4 @@ description: >-
 3. 简介和开场白的写法靠近 `original.md`（括号动作切奶声，叠字落在名词上，自称名字）。
 4. 需要具体癖好、卡住姿势、到货方式时翻 `reference.md`。定型的可以更靠近那些过街老鼠样本；幼的只借身体喜剧，不借无害化、退货处死。
 
-出图见 [迷你猫娘风格Ⅱ](../mini-catgirl-style-2/SKILL.md)、[雨箱](../mini-catgirl-rainbox/SKILL.md)。设定图版式见 [sheet-format](sheet-format/README.md)。
+出图见 [迷你猫娘风格Ⅱ](../mini-catgirl-style-2/SKILL.md)、[雨箱](../mini-catgirl-rainbox/SKILL.md)、[厚涂](../mini-catgirl-impasto/SKILL.md)。设定图版式见 [sheet-format](sheet-format/README.md)。
