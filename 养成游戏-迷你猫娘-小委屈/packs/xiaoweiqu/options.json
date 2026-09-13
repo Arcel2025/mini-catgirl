@@ -1,0 +1,88 @@
+[
+  {
+    "id": "ch1",
+    "label": "第一章",
+    "intro": true,
+    "still": "ch1-standlook",
+    "beats": [
+      {"still": "ch1-genkan", "text": "夏天。地铁挤完，门一开，夕阳还摊在客厅里。"},
+      {"who": "内心", "text": "……回来了。"},
+      {"text": "门被敲了一下。"},
+      {"who": "内心", "text": "谁啊？"},
+      {"text": "我走过去，从猫眼往外看。"},
+      {"who": "内心", "text": "没人。"},
+      {"who": "内心", "text": "恶作剧吧。"},
+      {"text": "我又走回去。"},
+      {"text": "过了一会儿，又敲。很轻，像小孩。"},
+      {"who": "内心", "text": "诈骗的？"},
+      {"who": "内心", "text": "不理。"},
+      {"text": "再后来，敲得急了。门外又是猫叫，又是小孩嗓。"},
+      {"who": "门外", "text": "喵呜……喵嗷……"},
+      {"who": "门外", "text": "有人吗？喵喵饿饿～"},
+      {"who": "内心", "text": "什么新骗局。"},
+      {"text": "我抄起门口的工兵铲，又贴到猫眼上。"},
+      {"who": "内心", "text": "……还是没有人。"},
+
+      {"still": "ch1-pushdoor", "who": "内心", "text": "暴脾气上来了。"},
+      {"text": "右手攥着铲子，门还关着。"},
+      {"who": "我", "text": "谁他妈的找死？"},
+
+      {"still": "ch1-box", "who": "迷你猫娘", "text": "呜呜呜……不要伤害喵喵……"},
+      {"text": "声音在脚边。"},
+      {"text": "纸箱里缩着一只迷你猫娘。旧毛巾裹着。"},
+      {"text": "她吓傻了。眼泪已经下来了。"},
+      {"text": "迷你猫娘这东西，世界上多得跟流浪猫差不多。"},
+      {"text": "又像人，又像猫。法律一直管不到，也懒得管。"},
+      {"who": "内心", "text": "……才奶猫那么大。"},
+      {"text": "我把铲子搁到一边，蹲下来。"},
+      {"text": "她抱着毯子，把自己裹严了。我倒看有点意思。"},
+      {"who": "迷你猫娘", "text": "喵喵……不好吃……不要……伤害……喵喵……呜呜呜呜"},
+
+      {"still": "ch1-letter", "text": "箱子底下压着一封信。我抽出来看。"},
+      {"still": "ch1-standlook", "who": "内心", "text": "呵呵，真有意思。"}
+    ]
+  },
+  {
+    "id": "feed",
+    "label": "喂食猫粮",
+    "engine": "feed",
+    "still": "eat",
+    "bubble": "啊呜啊呜",
+    "beats": [
+      {"screen": "black", "text": "开饭啦。碗比她的脸还大。"},
+      {"still": "eat", "say": true, "text": "好吃好吃！喵！喵！喵！"}
+    ]
+  },
+  {
+    "id": "wash",
+    "label": "擦拭",
+    "engine": "wash",
+    "beats": [
+      {"text": "白 T 下摆全是地毯毛。她把项圈捂紧。"},
+      {"say": true, "text": "项圈……不摘喵。"}
+    ]
+  },
+  {
+    "id": "play",
+    "label": "逗一逗",
+    "engine": "play",
+    "still": "happy",
+    "beats": [
+      {"text": "她想跟，头一沉，墩回地毯。"},
+      {"say": true, "text": "鞋鞋……委屈的喵。"}
+    ]
+  },
+  {"id": "start_job", "label": "去茶几底下钻", "engine": "start_job", "still": "work"},
+  {"id": "stop_job", "label": "收工", "engine": "stop_job"},
+  {"id": "medicine", "label": "吃药", "engine": "medicine"},
+  {"id": "revive", "label": "复活", "engine": "revive", "require": "dead"},
+  {
+    "id": "punish",
+    "label": "惩罚",
+    "children": [
+      {"id": "scold", "label": "训斥", "mood": -12, "bubble": "……", "still": "scold"},
+      {"id": "timeout", "label": "罚站", "mood": -8, "hunger": -4, "bubble": "站着", "still": "timeout"},
+      {"id": "ignore", "label": "不理", "mood": -6, "bubble": "……"}
+    ]
+  }
+]
