@@ -7,11 +7,11 @@
 公开库现在这些 skill：
 
 - **人设**：[mini-beast-girl](.cursor/skills/mini-beast-girl/SKILL.md)。她是谁、怎么动、怎么回话。
-- **出图·风格Ⅰ**：[迷你猫娘风格Ⅰ](.cursor/skills/mini-catgirl-style-1/SKILL.md)。有颜色的光，能走进去的地方。旧名色彩。
+- **出图·风格Ⅰ**：[迷你猫娘风格Ⅰ](.cursor/skills/mini-catgirl-style-1/SKILL.md)。我调试过的最接近迷你猫娘人设的画风，偏卡通。
 - **出图·风格Ⅱ**：[迷你猫娘风格Ⅱ](.cursor/skills/mini-catgirl-style-2/SKILL.md)。基因更接近正常猫娘幼仔的迷你猫娘。
 - **出图·雨箱**：[迷你猫娘·雨箱](.cursor/skills/mini-catgirl-rainbox/SKILL.md)。夜雨，全身或躲进纸箱。
 - **出图·厚涂**：[迷你猫娘·厚涂](.cursor/skills/mini-catgirl-impasto/SKILL.md)。电影光、喷枪体积。兽只留猫耳、猫爪、猫尾。
-- **出图·风格Ⅲ**：[迷你猫娘风格Ⅲ](.cursor/skills/mini-catgirl-style-3/SKILL.md)。高调糖果色的迷你兽娘。旧名多巴胺。
+- **出图·风格Ⅲ**：[迷你猫娘风格Ⅲ](.cursor/skills/mini-catgirl-style-3/SKILL.md)。风格偏甜。
 
 养成窗口在 [养成游戏-迷你猫娘-小委屈](养成游戏-迷你猫娘-小委屈/README.md)。其他画风和星野原图不在这个仓库。
 
