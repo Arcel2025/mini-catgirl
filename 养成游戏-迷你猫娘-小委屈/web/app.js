@@ -33,12 +33,8 @@
     file: document.getElementById("file"),
     places: document.getElementById("places"),
     minimap: document.getElementById("minimap"),
-    mapModal: document.getElementById("map-modal"),
-    mapModalBack: document.getElementById("map-modal-back"),
     pinYouMini: document.getElementById("pin-you-mini"),
     pinHerMini: document.getElementById("pin-her-mini"),
-    pinYouFull: document.getElementById("pin-you-full"),
-    pinHerFull: document.getElementById("pin-her-full"),
   };
 
   var STICKERS = {
@@ -102,21 +98,12 @@
   function buildNav() {
     els.places.innerHTML = "";
     House.NAV.forEach(function (item) {
+      if (item.locked) return;
       var btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = item.name;
       btn.setAttribute("data-nav", item.id);
-      if (item.locked) {
-        btn.classList.add("locked");
-        btn.title = item.reason;
-      }
       btn.addEventListener("click", function () {
-        if (item.locked) {
-          setLine(item.reason);
-          persist();
-          render(false);
-          return;
-        }
         setView(item.id);
       });
       els.places.appendChild(btn);
@@ -266,17 +253,6 @@
     var yy = you.y + (same ? 1.1 : 0);
     setPin(els.pinHerMini, hx, hy);
     setPin(els.pinYouMini, yx, yy);
-    setPin(els.pinHerFull, hx, hy);
-    setPin(els.pinYouFull, yx, yy);
-  }
-
-  function openMap() {
-    els.mapModal.hidden = false;
-    placePins();
-  }
-
-  function closeMap() {
-    els.mapModal.hidden = true;
   }
 
   function render(place) {
@@ -681,16 +657,6 @@
   els.girl.addEventListener("pointermove", onPointerMove);
   els.girl.addEventListener("pointerup", onPointerUp);
   els.girl.addEventListener("pointercancel", onPointerUp);
-
-  els.minimap.addEventListener("click", function () {
-    openMap();
-  });
-  els.mapModal.addEventListener("click", function () {
-    closeMap();
-  });
-  document.addEventListener("keydown", function (ev) {
-    if (ev.key === "Escape" && !els.mapModal.hidden) closeMap();
-  });
 
   window.setInterval(function () {
     Life.advanceTo(save, now());

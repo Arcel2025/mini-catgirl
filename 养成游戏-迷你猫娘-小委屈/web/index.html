@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>小委屈 · 日常</title>
-    <link rel="stylesheet" href="style.css?v=map3" />
+    <link rel="stylesheet" href="style.css?v=map9" />
   </head>
   <body>
     <div class="wrap">
       <div class="play">
+        <div class="place-bar" id="places"></div>
         <div class="stage" id="stage">
           <div class="scene" id="scene">
             <img class="bg" id="bg" src="assets/living.png" alt="客厅" />
@@ -24,11 +25,11 @@
         </div>
       </div>
       <aside class="panel" id="panel">
-        <button class="minimap" id="minimap" type="button" aria-label="打开地图">
+        <div class="minimap" id="minimap" aria-hidden="true">
           <img src="assets/house-floorplan.png" alt="" />
           <i class="pin pin-you" id="pin-you-mini" title="你"></i>
           <i class="pin pin-her" id="pin-her-mini" title="她"></i>
-        </button>
+        </div>
         <div class="panel-body">
         <div class="panel-head">
           <div class="gold" id="gold">0 金</div>
@@ -47,10 +48,6 @@
           <div class="bar">
             <span>健康</span><i><em id="health"></em></i><span id="healthN">0</span>
           </div>
-        </div>
-        <div class="panel-block">
-          <p class="label">房间</p>
-          <div class="row places" id="places"></div>
         </div>
         <div class="panel-block">
           <p class="label">档案</p>
@@ -77,19 +74,8 @@
         </div>
       </aside>
     </div>
-    <div class="map-modal" id="map-modal" hidden>
-      <button class="map-modal-back" id="map-modal-back" type="button" aria-label="关闭地图"></button>
-      <div class="map-modal-card" role="dialog" aria-modal="true" aria-label="房子地图">
-        <div class="map-full">
-          <img src="assets/house-floorplan.png" alt="房子平面图" />
-          <i class="pin pin-you" id="pin-you-full" title="你"></i>
-          <i class="pin pin-her" id="pin-her-full" title="她"></i>
-        </div>
-        <p class="map-legend"><i class="pin pin-her"></i> 她　<i class="pin pin-you"></i> 你　点空白关掉</p>
-      </div>
-    </div>
     <script src="life.js"></script>
-    <script src="house.js?v=map6"></script>
-    <script src="app.js?v=map6"></script>
+    <script src="house.js?v=map9"></script>
+    <script src="app.js?v=map9"></script>
   </body>
 </html>
