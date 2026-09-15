@@ -191,16 +191,34 @@ body {
   transform-origin: 50% 88%;
   cursor: grab;
   z-index: 3;
-  filter: drop-shadow(0 0.2rem 0.15rem rgba(80, 40, 10, 0.28));
   border: 0;
   padding: 0;
   background: transparent;
+}
+
+.girl::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  width: 58%;
+  height: 9%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(80, 40, 10, 0.26) 0%, rgba(80, 40, 10, 0.08) 48%, transparent 72%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.girl.away::after,
+.girl.dead::after {
+  display: none;
 }
 
 .girl-breath {
   display: block;
   transform-origin: 50% 92%;
   animation: chibi-breathe 2.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  backface-visibility: hidden;
 }
 
 .girl.away {
