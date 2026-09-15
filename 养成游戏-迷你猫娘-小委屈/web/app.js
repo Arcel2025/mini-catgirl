@@ -33,6 +33,10 @@
     file: document.getElementById("file"),
     places: document.getElementById("places"),
     minimap: document.getElementById("minimap"),
+    gear: document.getElementById("gear"),
+    settings: document.getElementById("settings"),
+    settingsDim: document.getElementById("settings-dim"),
+    settingsClose: document.getElementById("settings-close"),
     pinYouMini: document.getElementById("pin-you-mini"),
     pinHerMini: document.getElementById("pin-her-mini"),
   };
@@ -657,6 +661,37 @@
   els.girl.addEventListener("pointermove", onPointerMove);
   els.girl.addEventListener("pointerup", onPointerUp);
   els.girl.addEventListener("pointercancel", onPointerUp);
+
+  function openSettings() {
+    els.settings.hidden = false;
+  }
+
+  function closeSettings() {
+    els.settings.hidden = true;
+  }
+
+  els.gear.addEventListener("click", function () {
+    openSettings();
+  });
+  els.settingsClose.addEventListener("click", function () {
+    closeSettings();
+  });
+  els.settingsDim.addEventListener("click", function () {
+    closeSettings();
+  });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape" && !els.settings.hidden) closeSettings();
+  });
+
+  (function () {
+    var card = document.getElementById("her-card");
+    var key = "xiaoweiqu-her-open";
+    if (!card) return;
+    if (localStorage.getItem(key) === "0") card.open = false;
+    card.addEventListener("toggle", function () {
+      localStorage.setItem(key, card.open ? "1" : "0");
+    });
+  })();
 
   window.setInterval(function () {
     Life.advanceTo(save, now());

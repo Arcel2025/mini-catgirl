@@ -4,12 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>小委屈 · 日常</title>
-    <link rel="stylesheet" href="style.css?v=map9" />
+    <link rel="stylesheet" href="style.css?v=map15" />
   </head>
   <body>
     <div class="wrap">
       <div class="play">
-        <div class="place-bar" id="places"></div>
+        <div class="place-bar">
+          <div class="places" id="places"></div>
+          <button class="gear" id="gear" type="button" aria-label="档案设置">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M10.2 2.4h3.6l.4 2.2c.6.2 1.1.5 1.6.8l2.1-.9 1.8 3.1-1.7 1.5c.1.6.2 1.1.2 1.7s-.1 1.1-.2 1.7l1.7 1.5-1.8 3.1-2.1-.9c-.5.3-1 .6-1.6.8l-.4 2.2h-3.6l-.4-2.2c-.6-.2-1.1-.5-1.6-.8l-2.1.9-1.8-3.1 1.7-1.5c-.1-.6-.2-1.1-.2-1.7s.1-1.1.2-1.7L4.3 7.6l1.8-3.1 2.1.9c.5-.3 1-.6 1.6-.8l.4-2.2zM12 8.6A3.4 3.4 0 1 0 12 15.4 3.4 3.4 0 0 0 12 8.6z"
+              />
+            </svg>
+          </button>
+        </div>
         <div class="stage" id="stage">
           <div class="scene" id="scene">
             <img class="bg" id="bg" src="assets/living.png" alt="客厅" />
@@ -31,51 +41,60 @@
           <i class="pin pin-her" id="pin-her-mini" title="她"></i>
         </div>
         <div class="panel-body">
-        <div class="panel-head">
-          <div class="gold" id="gold">0 金</div>
-          <div class="where" id="where">小委屈在客厅</div>
-        </div>
-        <div class="bars">
-          <div class="bar">
-            <span>饥饿</span><i><em id="hunger"></em></i><span id="hungerN">0</span>
+        <details class="her-card" id="her-card" open>
+          <summary>小委屈</summary>
+          <div class="her-body">
+            <div class="panel-head">
+              <div class="gold" id="gold">0 金</div>
+              <div class="where" id="where">小委屈在客厅</div>
+            </div>
+            <div class="bars">
+              <div class="bar">
+                <span>饥饿</span><i><em id="hunger"></em></i><span id="hungerN">0</span>
+              </div>
+              <div class="bar">
+                <span>清洁</span><i><em id="clean"></em></i><span id="cleanN">0</span>
+              </div>
+              <div class="bar">
+                <span>心情</span><i><em id="mood"></em></i><span id="moodN">0</span>
+              </div>
+              <div class="bar">
+                <span>健康</span><i><em id="health"></em></i><span id="healthN">0</span>
+              </div>
+            </div>
+            <div class="panel-block">
+              <p class="label">照料</p>
+              <div class="row">
+                <button type="button" id="btn-wash">擦拭</button>
+                <button type="button" id="btn-med">吃药</button>
+                <button type="button" id="btn-revive">复活</button>
+              </div>
+            </div>
           </div>
-          <div class="bar">
-            <span>清洁</span><i><em id="clean"></em></i><span id="cleanN">0</span>
-          </div>
-          <div class="bar">
-            <span>心情</span><i><em id="mood"></em></i><span id="moodN">0</span>
-          </div>
-          <div class="bar">
-            <span>健康</span><i><em id="health"></em></i><span id="healthN">0</span>
-          </div>
-        </div>
-        <div class="panel-block">
-          <p class="label">档案</p>
-          <div class="row">
-            <button type="button" data-slot="0" class="active">一</button>
-            <button type="button" data-slot="1">二</button>
-            <button type="button" data-slot="2">三</button>
-          </div>
-          <div class="row">
-            <button type="button" id="btn-export">导出</button>
-            <button type="button" id="btn-import">导入</button>
-            <input id="file" type="file" accept="application/json,.json" />
-          </div>
-        </div>
-        <div class="panel-block">
-          <p class="label">照料</p>
-          <div class="row">
-            <button type="button" id="btn-wash">擦拭</button>
-            <button type="button" id="btn-med">吃药</button>
-            <button type="button" id="btn-revive">复活</button>
-          </div>
-        </div>
+        </details>
         <p class="hint" id="hint">点她摸摸。点碗喂。拖到地毯、碗边、窗边、沙发前。她有时会去阳台。</p>
         </div>
       </aside>
     </div>
+    <div class="settings" id="settings" hidden>
+      <div class="settings-dim" id="settings-dim"></div>
+      <div class="settings-card" role="dialog" aria-modal="true" aria-label="档案">
+        <button class="settings-close" id="settings-close" type="button" aria-label="关闭档案">×</button>
+        <p class="label">档案</p>
+        <div class="row">
+          <button type="button" data-slot="0" class="active">一</button>
+          <button type="button" data-slot="1">二</button>
+          <button type="button" data-slot="2">三</button>
+        </div>
+        <div class="row">
+          <button type="button" id="btn-export">导出</button>
+          <button type="button" id="btn-import">导入</button>
+          <input id="file" type="file" accept="application/json,.json" />
+        </div>
+      </div>
+    </div>
     <script src="life.js"></script>
-    <script src="house.js?v=map9"></script>
-    <script src="app.js?v=map9"></script>
+    <script src="house.js?v=map14"></script>
+    <script src="app.js?v=map14"></script>
   </body>
 </html>
