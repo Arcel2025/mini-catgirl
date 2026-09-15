@@ -15,5 +15,5 @@ ch1-balcony.png 空杂物阳台（已定稿）
 ch1-balcony-corner.png 阳台角落局部放大：她坐正方形纸箱里（已定稿）
 living.png 横版俯视空客厅。网页日常底图。沙发茶几餐桌地毯。没有她。
 stand.png 站姿贴纸。网页日常用。
-网页阳台日常用 ch1-balcony.png 的拷贝（web/assets/balcony.png），不要重出空阳台。
+网页日常阳台底图是 web/assets/balcony.png（横版晒衣阳台）。ch1-balcony.png 只给第一章，不要把竖图拉长当日常。
 house-floorplan.png 房子平面图。日常场地按这张。过程图已删。
