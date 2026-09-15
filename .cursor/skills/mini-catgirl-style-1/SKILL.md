@@ -74,7 +74,7 @@ A real navigable space with depth, not a pattern wallpaper. Character centered s
 A stray mini catgirl on a real night street or alley. She is tiny. Shop or lamp light colors her face. Full body. One character only.
 ```
 
-第一人称成人手：迷你猫娘约 20cm，整段身子大约等于一只成人手（腕到指尖）。头大约一只拳头。两指就能拎起来。不要画成手掌那么大。
+第一人称成人手：迷你猫娘约 20cm，整段身子大约等于一只成人手（腕到指尖）。头大约一只拳头。两指就能拎起来。不要画成手掌那么大。趴枕、捧脸见 [第一视角](../mini-catgirl-pov/SKILL.md)。
 
 ## QA
 
