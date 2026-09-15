@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>小委屈 · 日常</title>
-    <link rel="stylesheet" href="style.css?v=map17" />
+    <link rel="stylesheet" href="style.css?v=map29" />
   </head>
   <body>
     <div class="wrap">
       <div class="play">
         <div class="place-bar">
           <div class="places" id="places"></div>
-          <button class="gear" id="gear" type="button" aria-label="档案设置">
+          <button class="gear" id="gear" type="button" aria-label="存档">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill="currentColor"
@@ -23,15 +23,20 @@
         <div class="stage" id="stage">
           <div class="scene" id="scene">
             <img class="bg" id="bg" src="assets/living.png" alt="客厅" />
-            <button class="bowl" id="bowl" type="button" aria-label="食碗"></button>
+            <button class="bowl" id="bowl" type="button" aria-label="饭盆">
+              <img id="bowl-img" src="assets/bowl-empty.png?v=bowl2" alt="" draggable="false" />
+              <span class="bowl-n" id="bowl-n">0</span>
+            </button>
             <button class="gate" id="gate" type="button" hidden aria-label="回客厅"></button>
             <button class="girl" id="girl" type="button" aria-label="小委屈">
-              <img src="assets/stand.png" alt="" draggable="false" />
+              <span class="girl-breath">
+                <img src="assets/stand.png?v=head1" alt="" draggable="false" />
+              </span>
             </button>
           </div>
         </div>
         <div class="caption">
-          <p class="line" id="line">鞋鞋……饭饭？</p>
+          <p class="line" id="line">小委屈：鞋鞋……饭饭？</p>
         </div>
       </div>
       <aside class="panel" id="panel">
@@ -42,12 +47,11 @@
         </div>
         <div class="panel-body">
         <details class="her-card" id="her-card" open>
-          <summary>小委屈</summary>
+          <summary>
+            <span class="her-name">小委屈</span>
+            <span class="where" id="where">位置：客厅</span>
+          </summary>
           <div class="her-body">
-            <div class="panel-head">
-              <div class="gold" id="gold">0 金</div>
-              <div class="where" id="where">小委屈在客厅</div>
-            </div>
             <div class="bars">
               <div class="bar">
                 <span>饥饿</span><i><em id="hunger"></em></i><span id="hungerN">0</span>
@@ -60,6 +64,16 @@
               </div>
               <div class="bar">
                 <span>健康</span><i><em id="health"></em></i><span id="healthN">0</span>
+              </div>
+              <div class="bar">
+                <span>体力</span><i><em id="stamina"></em></i><span id="staminaN">0</span>
+              </div>
+            </div>
+            <div class="panel-block">
+              <p class="label">互动</p>
+              <div class="row">
+                <button type="button" id="btn-sit">坐下</button>
+                <button type="button" id="btn-stand">站起来</button>
               </div>
             </div>
             <div class="panel-block">
@@ -77,14 +91,23 @@
     </div>
     <div class="settings" id="settings" hidden>
       <div class="settings-dim" id="settings-dim"></div>
-      <div class="settings-card" role="dialog" aria-modal="true" aria-label="档案">
-        <button class="settings-close" id="settings-close" type="button" aria-label="关闭档案">×</button>
-        <p class="label">档案</p>
-        <div class="row">
-          <button type="button" data-slot="0" class="active">一</button>
-          <button type="button" data-slot="1">二</button>
-          <button type="button" data-slot="2">三</button>
+      <div class="settings-card" role="dialog" aria-modal="true" aria-label="存档">
+        <button class="settings-close" id="settings-close" type="button" aria-label="关闭存档">×</button>
+        <p class="save-title">存档</p>
+        <div class="save-stat">
+          <span>金币</span>
+          <span class="gold" id="gold">0 金</span>
         </div>
+        <div class="save-stat">
+          <span>时间</span>
+          <span id="save-time">—</span>
+        </div>
+        <details class="bag-card" id="bag-card">
+          <summary>背包</summary>
+          <ul class="bag empty" id="bag">
+            <li>空</li>
+          </ul>
+        </details>
         <div class="row">
           <button type="button" id="btn-export">导出</button>
           <button type="button" id="btn-import">导入</button>
@@ -92,8 +115,8 @@
         </div>
       </div>
     </div>
-    <script src="life.js"></script>
-    <script src="house.js?v=map15"></script>
-    <script src="app.js?v=map15"></script>
+    <script src="life.js?v=map19"></script>
+    <script src="house.js?v=map22"></script>
+    <script src="app.js?v=map44"></script>
   </body>
 </html>

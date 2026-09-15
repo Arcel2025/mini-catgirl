@@ -22,6 +22,7 @@
     FEED_GOLD: 10,
     FEED_HUNGER: 40.0,
     FEED_MOOD: 8.0,
+    BOWL_MAX: 10,
     WASH_GOLD: 5,
     WASH_CLEAN: 50.0,
     WASH_MOOD: 4.0,
@@ -34,7 +35,11 @@
     REVIVE_CLEAN: 60.0,
     REVIVE_MOOD: 40.0,
     REVIVE_HEALTH: 50.0,
-    START_GOLD: 80,
+    REVIVE_STAMINA: 60.0,
+    FOLLOW_STAMINA: 10.0,
+    FOLLOW_HUNGER: 10.0,
+    FOLLOW_CLEAN: 10.0,
+    START_GOLD: 99999,
     ONLINE_GAP: 90.0,
     MAX_CATCHUP_MINUTES: 14 * 24 * 60,
     PET_MOOD: 4.0,
@@ -45,6 +50,30 @@
     v.cleanliness = Math.max(0, Math.min(100, v.cleanliness));
     v.mood = Math.max(0, Math.min(100, v.mood));
     v.health = Math.max(0, Math.min(100, v.health));
+    if (v.stamina == null || isNaN(v.stamina)) v.stamina = 100;
+    v.stamina = Math.max(0, Math.min(100, v.stamina));
+  }
+
+  function readInventory(raw) {
+    if (!Array.isArray(raw)) return [];
+    var out = [];
+    raw.forEach(function (it) {
+      if (it == null) return;
+      if (typeof it === "string") {
+        var s = it.trim();
+        if (!s) return;
+        out.push({ id: s, name: s, count: 1 });
+        return;
+      }
+      var name = String(it.name || it.id || "").trim();
+      if (!name) return;
+      out.push({
+        id: String(it.id || name),
+        name: name,
+        count: Math.max(1, Math.round(Number(it.count || 1))),
+      });
+    });
+    return out;
   }
 
   function newSave(now) {
@@ -52,7 +81,7 @@
       schema: 1,
       last_simulated_at: now,
       rng_state: 1,
-      vitals: { hunger: 100, cleanliness: 100, mood: 80, health: 100 },
+      vitals: { hunger: 100, cleanliness: 100, mood: 80, health: 100, stamina: 100 },
       gold: T.START_GOLD,
       life_phase: "alive",
       ailment: null,
@@ -63,6 +92,7 @@
       last_option: null,
       last_still: null,
       flags: { daily_life: 1 },
+      inventory: [],
     };
   }
 
@@ -78,6 +108,7 @@
         cleanliness: Number(raw.cleanliness != null ? raw.cleanliness : 100),
         mood: Number(raw.mood != null ? raw.mood : 80),
         health: Number(raw.health != null ? raw.health : 100),
+        stamina: Number(raw.stamina != null ? raw.stamina : 100),
       },
       gold: Math.max(0, Number(data.gold != null ? data.gold : T.START_GOLD)),
       life_phase: data.life_phase === "dead" ? "dead" : "alive",
@@ -89,6 +120,7 @@
       last_option: data.last_option || null,
       last_still: data.last_still || null,
       flags: {},
+      inventory: readInventory(data.inventory),
     };
     var flags = data.flags || {};
     Object.keys(flags).forEach(function (k) {
@@ -108,6 +140,7 @@
         cleanliness: save.vitals.cleanliness,
         mood: save.vitals.mood,
         health: save.vitals.health,
+        stamina: save.vitals.stamina,
       },
       gold: save.gold,
       life_phase: save.life_phase,
@@ -119,6 +152,9 @@
       last_option: save.last_option,
       last_still: save.last_still,
       flags: Object.assign({}, save.flags),
+      inventory: (save.inventory || []).map(function (it) {
+        return { id: it.id, name: it.name, count: it.count };
+      }),
     };
   }
 
@@ -237,6 +273,7 @@
         cleanliness: T.REVIVE_CLEAN,
         mood: T.REVIVE_MOOD,
         health: T.REVIVE_HEALTH,
+        stamina: T.REVIVE_STAMINA,
       };
       save.last_care_minute = simMinute(now);
       events.push("revived");
@@ -265,13 +302,24 @@
       events.push("denied");
       return events;
     }
-    if (careDenied(save, now)) {
+    if (kind !== "meal" && careDenied(save, now)) {
       events.push("denied");
       return events;
     }
 
     var v = save.vitals;
-    if (kind === "feed") {
+    if (kind === "pour") {
+      if (save.gold < T.FEED_GOLD) {
+        events.push("denied");
+        return events;
+      }
+      save.gold -= T.FEED_GOLD;
+      events.push("poured");
+    } else if (kind === "meal") {
+      v.hunger += T.FEED_HUNGER;
+      v.mood += T.FEED_MOOD;
+      events.push("fed");
+    } else if (kind === "feed") {
       if (save.gold < T.FEED_GOLD) {
         events.push("denied");
         return events;
@@ -310,7 +358,7 @@
       return events;
     }
     clampVitals(v);
-    if (kind !== "pet") save.last_care_minute = simMinute(now);
+    if (kind !== "pet" && kind !== "meal") save.last_care_minute = simMinute(now);
     return events;
   }
 
@@ -320,6 +368,14 @@
     return events;
   }
 
+  function followSwitch(save) {
+    var v = save.vitals;
+    v.stamina -= T.FOLLOW_STAMINA;
+    v.hunger -= T.FOLLOW_HUNGER;
+    v.cleanliness -= T.FOLLOW_CLEAN;
+    clampVitals(v);
+  }
+
   global.Life = {
     T: T,
     newSave: newSave,
@@ -327,6 +383,7 @@
     toDict: toDict,
     advanceTo: advanceTo,
     applyCommand: applyCommand,
+    followSwitch: followSwitch,
     step: step,
   };
 })(window);
