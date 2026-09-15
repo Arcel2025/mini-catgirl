@@ -3,12 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>小委屈 · 客厅</title>
-    <link rel="stylesheet" href="style.css?v=eatwalk" />
+    <title>小委屈 · 日常</title>
+    <link rel="stylesheet" href="style.css?v=map3" />
   </head>
   <body>
     <div class="wrap">
-      <div class="hud">
+      <div class="play">
+        <div class="stage" id="stage">
+          <div class="scene" id="scene">
+            <img class="bg" id="bg" src="assets/living.png" alt="客厅" />
+            <button class="bowl" id="bowl" type="button" aria-label="食碗"></button>
+            <button class="gate" id="gate" type="button" hidden aria-label="回客厅"></button>
+            <button class="girl" id="girl" type="button" aria-label="小委屈">
+              <img src="assets/stand.png" alt="" draggable="false" />
+            </button>
+          </div>
+        </div>
+        <div class="caption">
+          <p class="line" id="line">鞋鞋……饭饭？</p>
+        </div>
+      </div>
+      <aside class="panel" id="panel">
+        <button class="minimap" id="minimap" type="button" aria-label="打开地图">
+          <img src="assets/house-floorplan.png" alt="" />
+          <i class="pin pin-you" id="pin-you-mini" title="你"></i>
+          <i class="pin pin-her" id="pin-her-mini" title="她"></i>
+        </button>
+        <div class="panel-body">
+        <div class="panel-head">
+          <div class="gold" id="gold">0 金</div>
+          <div class="where" id="where">小委屈在客厅</div>
+        </div>
         <div class="bars">
           <div class="bar">
             <span>饥饿</span><i><em id="hunger"></em></i><span id="hungerN">0</span>
@@ -23,35 +48,48 @@
             <span>健康</span><i><em id="health"></em></i><span id="healthN">0</span>
           </div>
         </div>
-        <div class="gold" id="gold">0 金</div>
-      </div>
-      <div class="stage" id="stage">
-        <img class="bg" src="assets/living.png" alt="客厅" />
-        <button class="bowl" id="bowl" type="button" aria-label="食碗"></button>
-        <button class="girl" id="girl" type="button" aria-label="小委屈">
-          <img src="assets/stand.png" alt="" draggable="false" />
-        </button>
-      </div>
-      <div class="dock">
-        <p class="line" id="line">鞋鞋……饭饭？</p>
-        <div class="tools">
-          <button type="button" data-slot="0" class="active">一</button>
-          <button type="button" data-slot="1">二</button>
-          <button type="button" data-slot="2">三</button>
-          <button type="button" id="btn-export">导出</button>
-          <button type="button" id="btn-import">导入</button>
-          <button type="button" id="btn-more">⋯</button>
-          <input id="file" type="file" accept="application/json,.json" />
-          <div class="more" id="more">
+        <div class="panel-block">
+          <p class="label">房间</p>
+          <div class="row places" id="places"></div>
+        </div>
+        <div class="panel-block">
+          <p class="label">档案</p>
+          <div class="row">
+            <button type="button" data-slot="0" class="active">一</button>
+            <button type="button" data-slot="1">二</button>
+            <button type="button" data-slot="2">三</button>
+          </div>
+          <div class="row">
+            <button type="button" id="btn-export">导出</button>
+            <button type="button" id="btn-import">导入</button>
+            <input id="file" type="file" accept="application/json,.json" />
+          </div>
+        </div>
+        <div class="panel-block">
+          <p class="label">照料</p>
+          <div class="row">
             <button type="button" id="btn-wash">擦拭</button>
             <button type="button" id="btn-med">吃药</button>
             <button type="button" id="btn-revive">复活</button>
           </div>
-          <p class="hint">点她摸摸。点碗喂。拖到地毯、碗边、窗边、沙发前。沙发和桌子只是底图。</p>
         </div>
+        <p class="hint" id="hint">点她摸摸。点碗喂。拖到地毯、碗边、窗边、沙发前。她有时会去阳台。</p>
+        </div>
+      </aside>
+    </div>
+    <div class="map-modal" id="map-modal" hidden>
+      <button class="map-modal-back" id="map-modal-back" type="button" aria-label="关闭地图"></button>
+      <div class="map-modal-card" role="dialog" aria-modal="true" aria-label="房子地图">
+        <div class="map-full">
+          <img src="assets/house-floorplan.png" alt="房子平面图" />
+          <i class="pin pin-you" id="pin-you-full" title="你"></i>
+          <i class="pin pin-her" id="pin-her-full" title="她"></i>
+        </div>
+        <p class="map-legend"><i class="pin pin-her"></i> 她　<i class="pin pin-you"></i> 你　点空白关掉</p>
       </div>
     </div>
     <script src="life.js"></script>
-    <script src="app.js?v=eatwalk2"></script>
+    <script src="house.js?v=map3"></script>
+    <script src="app.js?v=map3"></script>
   </body>
 </html>
