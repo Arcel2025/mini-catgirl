@@ -1,0 +1,247 @@
+:root {
+  --ink: #3a2a22;
+  --paper: #fff6ea;
+  --muted: #8a6e5c;
+  --fill: #d9854a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1b1410;
+  color: var(--ink);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.wrap {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+}
+
+.hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.7rem 1rem 2.4rem;
+  background: linear-gradient(to bottom, rgba(27, 20, 16, 0.78), transparent);
+  color: var(--paper);
+  font-size: 0.82rem;
+  pointer-events: none;
+}
+
+.bars {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 14rem;
+  max-width: 22rem;
+  flex: 1;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 2.4em 1fr 2.2em;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.bar span {
+  color: #f0ddd0;
+}
+
+.bar i {
+  display: block;
+  height: 0.5rem;
+  background: rgba(40, 28, 22, 0.55);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar i em {
+  display: block;
+  height: 100%;
+  background: var(--fill);
+  border-radius: 99px;
+}
+
+.gold {
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.1rem;
+  white-space: nowrap;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #3a2a22;
+  touch-action: none;
+  user-select: none;
+}
+
+.stage .bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+}
+
+.bowl {
+  position: absolute;
+  width: min(4.6vw, 5.8vh);
+  aspect-ratio: 1.35 / 1;
+  left: 46%;
+  top: 66%;
+  transform: translate(-50%, -40%);
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 35%, #f0dcc0 0 34%, transparent 36%),
+    radial-gradient(ellipse at 50% 55%, #6b3d24 0 42%, #c4a06a 46% 100%);
+  box-shadow: 0 0.15rem 0 #8a6840, inset 0 0.2rem 0.25rem rgba(60, 30, 10, 0.45);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.bowl.has-food {
+  background:
+    radial-gradient(ellipse at 50% 48%, #7a4a28 0 38%, transparent 40%),
+    radial-gradient(ellipse at 50% 35%, #f0dcc0 0 34%, transparent 36%),
+    radial-gradient(ellipse at 50% 55%, #6b3d24 0 42%, #c4a06a 46% 100%);
+}
+
+.bowl.away {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.girl {
+  position: absolute;
+  width: min(9vw, 18vh);
+  left: 55%;
+  top: 82%;
+  transform: translate(-50%, -88%);
+  transform-origin: 50% 88%;
+  cursor: grab;
+  z-index: 3;
+  filter: drop-shadow(0 0.2rem 0.15rem rgba(80, 40, 10, 0.28));
+  animation: breathe 2.6s ease-in-out infinite;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.girl img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.girl.dragging,
+.girl.walking {
+  cursor: grabbing;
+  animation: none;
+  z-index: 4;
+}
+
+.girl.eating {
+  width: min(15vw, 30vh);
+  animation: none;
+}
+
+.girl.dead {
+  animation: none;
+  transform: translate(-50%, -70%) rotate(78deg);
+  opacity: 0.85;
+  cursor: default;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -88%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -88%) translateY(-1.6%);
+  }
+}
+
+.dock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: 1.6rem 1rem 0.85rem;
+  background: linear-gradient(to top, rgba(255, 246, 234, 0.96) 55%, transparent);
+}
+
+.line {
+  margin: 0;
+  padding: 0 0.2rem 0.4rem;
+  min-height: 1.6rem;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tools button,
+.tools label {
+  border: 1px solid #e0c8ae;
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.32rem 0.8rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.tools button.active {
+  background: #3a2a22;
+  color: #fff;
+  border-color: #3a2a22;
+}
+
+.tools input[type="file"] {
+  display: none;
+}
+
+.more {
+  display: none;
+  width: 100%;
+  gap: 0.35rem;
+}
+
+.more.open {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hint {
+  width: 100%;
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}

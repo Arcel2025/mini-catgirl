@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>小委屈 · 客厅</title>
+    <link rel="stylesheet" href="style.css?v=eatwalk" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hud">
+        <div class="bars">
+          <div class="bar">
+            <span>饥饿</span><i><em id="hunger"></em></i><span id="hungerN">0</span>
+          </div>
+          <div class="bar">
+            <span>清洁</span><i><em id="clean"></em></i><span id="cleanN">0</span>
+          </div>
+          <div class="bar">
+            <span>心情</span><i><em id="mood"></em></i><span id="moodN">0</span>
+          </div>
+          <div class="bar">
+            <span>健康</span><i><em id="health"></em></i><span id="healthN">0</span>
+          </div>
+        </div>
+        <div class="gold" id="gold">0 金</div>
+      </div>
+      <div class="stage" id="stage">
+        <img class="bg" src="assets/living.png" alt="客厅" />
+        <button class="bowl" id="bowl" type="button" aria-label="食碗"></button>
+        <button class="girl" id="girl" type="button" aria-label="小委屈">
+          <img src="assets/stand.png" alt="" draggable="false" />
+        </button>
+      </div>
+      <div class="dock">
+        <p class="line" id="line">鞋鞋……饭饭？</p>
+        <div class="tools">
+          <button type="button" data-slot="0" class="active">一</button>
+          <button type="button" data-slot="1">二</button>
+          <button type="button" data-slot="2">三</button>
+          <button type="button" id="btn-export">导出</button>
+          <button type="button" id="btn-import">导入</button>
+          <button type="button" id="btn-more">⋯</button>
+          <input id="file" type="file" accept="application/json,.json" />
+          <div class="more" id="more">
+            <button type="button" id="btn-wash">擦拭</button>
+            <button type="button" id="btn-med">吃药</button>
+            <button type="button" id="btn-revive">复活</button>
+          </div>
+          <p class="hint">点她摸摸。点碗喂。拖到地毯、碗边、窗边、沙发前。沙发和桌子只是底图。</p>
+        </div>
+      </div>
+    </div>
+    <script src="life.js"></script>
+    <script src="app.js?v=eatwalk2"></script>
+  </body>
+</html>

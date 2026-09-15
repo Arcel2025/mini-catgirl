@@ -13,3 +13,5 @@ ch1-pushbox-cry.png 推箱哭红脸
 ch1-lift.png 两指提箱、两指拎衣领
 ch1-balcony.png 空杂物阳台（已定稿）
 ch1-balcony-corner.png 阳台角落局部放大：她坐正方形纸箱里（已定稿）
+living.png 横版俯视空客厅。网页日常底图，铺满屏幕。沙发茶几餐桌地毯。没有她。
+stand.png 站姿贴纸。网页日常用。
