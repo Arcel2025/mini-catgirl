@@ -29,7 +29,6 @@
     bowl: document.getElementById("bowl"),
     gate: document.getElementById("gate"),
     line: document.getElementById("line"),
-    hint: document.getElementById("hint"),
     file: document.getElementById("file"),
     places: document.getElementById("places"),
     minimap: document.getElementById("minimap"),
@@ -126,7 +125,6 @@
     }
     els.stage.dataset.place = p.id;
     els.bg.alt = p.name;
-    els.hint.textContent = p.hint;
     if (p.hasBowl) {
       els.bowl.hidden = false;
       els.bowl.style.left = p.bowl.x + "%";

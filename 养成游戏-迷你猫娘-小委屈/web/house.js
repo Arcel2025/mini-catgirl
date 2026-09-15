@@ -13,7 +13,6 @@
       bowl: { x: 43, y: 67 },
       girlW: "9%",
       girlEatW: "15%",
-      hint: "点她摸摸。点碗喂。拖到地毯、碗边、窗边、沙发前。顶上可以换房间。",
       map: { x: 54, y: 40 },
       spots: {
         rug: { x: 55, y: 82 },
@@ -32,7 +31,6 @@
       hasBowl: false,
       girlW: "6%",
       girlEatW: "6%",
-      hint: "点她摸摸。点近处门口回客厅。顶上可以换房间。碗在客厅。",
       map: { x: 52, y: 76 },
       spots: {
         pot: { x: 72, y: 58 },
