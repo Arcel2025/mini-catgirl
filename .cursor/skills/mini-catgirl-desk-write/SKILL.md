@@ -11,7 +11,7 @@ description: >-
 
 动作车道，不是新画风。画风跟 [迷你猫娘风格Ⅰ](../mini-catgirl-style-1/SKILL.md)。人设先读 [mini-beast-girl](../mini-beast-girl/SKILL.md)。角色默认 [棉花坐](../mini-catgirl-wardrobe/SKILL.md)。
 
-两只手各握一支笔见 [双笔发懵](../mini-catgirl-two-pen/SKILL.md)。本条只有一只铅笔、一盏台灯。
+两只手各握一支笔见 [双笔发懵](../mini-catgirl-two-pen/SKILL.md)。本条只有一只铅笔、一盏台灯。趴键盘、桌上啃鸡见 [风格Ⅰ](../mini-catgirl-style-1/SKILL.md)。
 
 只蒸馏伏案和灯。脸、衣服跟风格Ⅰ / 角色定稿。小红书原图、水印不要进 `examples/`，也不要当 `reference_image_paths`。眼镜是道具，不是人设。
 
