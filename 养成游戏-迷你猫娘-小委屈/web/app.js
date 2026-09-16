@@ -73,16 +73,16 @@
     bow: "assets/bow-a.png?v=1",
   };
   var WALK_CYCLE = [
-    "assets/walk-1.png?v=step2",
-    "assets/walk-3.png?v=step2",
+    "assets/walk-1.png?v=pad1",
+    "assets/walk-3.png?v=pad1",
   ];
   var RUN_CYCLE = [
-    "assets/run-1.png?v=qrun1",
-    "assets/run-2.png?v=qrun1",
-    "assets/run-3.png?v=qrun1",
-    "assets/run-4.png?v=qrun1",
+    "assets/run-1.png?v=pad1",
+    "assets/run-2.png?v=pad1",
+    "assets/run-3.png?v=pad1",
+    "assets/run-4.png?v=pad1",
   ];
-  var PANT_CYCLE = ["assets/pant-a.png?v=run1", "assets/pant-b.png?v=run1"];
+  var PANT_CYCLE = ["assets/pant-a.png?v=pad1", "assets/pant-b.png?v=pad1"];
   var BOW_CYCLE = ["assets/bow-a.png?v=1", "assets/bow-b.png?v=1"];
   var BOW_FRAME_MS = 340;
   var STAND_CYCLE = ["assets/stand.png?v=head1", "assets/stand-b.png?v=head1"];

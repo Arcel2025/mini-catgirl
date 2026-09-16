@@ -217,7 +217,7 @@ body {
 .girl-breath {
   display: block;
   transform-origin: 50% 92%;
-  animation: chibi-breathe 2.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: chibi-breathe 5.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
   backface-visibility: hidden;
 }
 
@@ -276,10 +276,10 @@ body {
 @keyframes chibi-breathe {
   0%,
   100% {
-    transform: translateY(0.35%) scale(1.012, 0.988);
+    transform: scale(1.012, 0.988);
   }
   50% {
-    transform: translateY(-1.8%) scale(0.988, 1.012);
+    transform: scale(0.988, 1.012);
   }
 }
 

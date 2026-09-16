@@ -40,12 +40,12 @@
       girlLieW: "16%",
       map: { x: 52, y: 76 },
       spots: {
-        center: { x: 50, y: 50 },
+        center: { x: 58, y: 64 },
         pot: { x: 72, y: 58 },
         corner: { x: 32, y: 58 },
-        door: { x: 50, y: 62 },
+        door: { x: 32, y: 78 },
       },
-      floor: { x0: 30, y0: 48, x1: 80, y1: 74 },
+      floor: { x0: 28, y0: 56, x1: 76, y1: 80 },
       gate: { x: 8, y: 78, w: 84, h: 22, to: "living", label: "回客厅" },
     },
   };
