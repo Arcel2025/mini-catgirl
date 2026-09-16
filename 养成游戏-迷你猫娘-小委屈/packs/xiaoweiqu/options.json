@@ -115,12 +115,10 @@
     "engine": "play",
     "still": "happy",
     "beats": [
-      {"text": "她想跟，头一沉，墩回地毯。"},
-      {"say": true, "text": "鞋鞋……委屈的喵。"}
+      {"text": "她把脸拱过来。铃铛轻轻响。"},
+      {"say": true, "text": "呼噜……舒服舒服。"}
     ]
   },
-  {"id": "start_job", "label": "去茶几底下钻", "engine": "start_job", "still": "work", "need_flag": "daily_life"},
-  {"id": "stop_job", "label": "收工", "engine": "stop_job", "need_flag": "daily_life"},
   {"id": "medicine", "label": "吃药", "engine": "medicine", "need_flag": "daily_life"},
   {"id": "revive", "label": "复活", "engine": "revive", "require": "dead", "need_flag": "daily_life"},
   {
