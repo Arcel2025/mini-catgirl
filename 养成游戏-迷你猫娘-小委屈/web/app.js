@@ -918,7 +918,7 @@
       else if (kind === "medicine" && save.gold < Life.T.MED_GOLD) setLine("金币不够。");
       else if (kind === "revive" && save.gold < Life.T.REVIVE_GOLD) setLine("金币不够，救不回来。");
       else if (kind === "revive") setLine(denyLine || "现在不用救。");
-      else sheSays(denyLine || "等一等喵。");
+      else if (denyLine) sheSays(denyLine);
     } else {
       if (kind === "pour") setLine(okLine);
       else sheSays(okLine);
@@ -955,7 +955,7 @@
   function beginMeal() {
     if (!wantsMeal()) return;
     if (girl().place !== house.bowl.place) return;
-    if (!act("meal", "啊呜啊呜。好吃好吃！喵！", "等一等喵。")) return;
+    if (!act("meal", "啊呜啊呜。好吃好吃！喵！")) return;
     house.bowl.food = Math.max(0, house.bowl.food - 1);
     startEat();
   }
@@ -1119,7 +1119,7 @@
       });
       return;
     }
-    if (!act("pour", "哗——粮倒进去了。", "等一等喵。")) return;
+    if (!act("pour", "哗——粮倒进去了。")) return;
     house.bowl.food = House.BOWL_MAX;
     els.bowlN.textContent = String(house.bowl.food);
     persist();
@@ -1346,7 +1346,7 @@
       persist();
       return;
     }
-    if (!act(kind, line, "等一等喵。")) return;
+    if (!act(kind, line)) return;
     drivePhase = 0;
     clearFlash();
     if (!sticker) return;
@@ -1481,10 +1481,10 @@
   document.getElementById("btn-sit").addEventListener("click", askSit);
   document.getElementById("btn-stand").addEventListener("click", askStand);
   document.getElementById("btn-play").addEventListener("click", function () {
-    if (act("play", "嘿嘿……好玩。", "等一等喵。")) flashSticker("play", 2800);
+    if (act("play", "嘿嘿……好玩。")) flashSticker("play", 2800);
   });
   document.getElementById("btn-wash").addEventListener("click", function () {
-    if (act("wash", "项圈……不摘喵。", "等一等喵。")) flashSticker("wipe", 2800);
+    if (act("wash", "项圈……不摘喵。")) flashSticker("wipe", 2800);
   });
   document.getElementById("btn-scold").addEventListener("click", function () {
     punishNow("scold", "punish", "……委屈的喵。");
@@ -1497,7 +1497,7 @@
   });
   document.getElementById("btn-drive").addEventListener("click", askDrive);
   document.getElementById("btn-med").addEventListener("click", function () {
-    act("medicine", "苦苦的……但人让吃。", "等一等喵。");
+    act("medicine", "苦苦的……但人让吃。");
   });
   document.getElementById("btn-revive").addEventListener("click", function () {
     if (act("revive", "又睁开眼了。", "现在不用救。")) {

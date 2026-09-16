@@ -250,10 +250,6 @@
     return events;
   }
 
-  function careDenied(save, now) {
-    return simMinute(now) === save.last_care_minute;
-  }
-
   function applyCommand(save, kind, now) {
     var events = [];
     if (save.life_phase === "dead") {
@@ -300,10 +296,6 @@
       return events;
     }
     if (kind === "revive") {
-      events.push("denied");
-      return events;
-    }
-    if (kind !== "meal" && careDenied(save, now)) {
       events.push("denied");
       return events;
     }
