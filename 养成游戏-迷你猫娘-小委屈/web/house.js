@@ -106,15 +106,35 @@
     if (PLACES[raw.place]) g.place = raw.place;
     var spots = PLACES[g.place].spots;
     if (spots[raw.spot]) g.spot = raw.spot;
-    g.sticker =
-      raw.sticker === "eat" || raw.sticker === "walk" || raw.sticker === "run" || raw.sticker === "pant" || raw.sticker === "bow"
-        ? "stand"
-        : String(raw.sticker || "stand");
-    if (g.sticker !== "stand" && g.sticker !== "sit" && g.sticker !== "lie") g.sticker = "stand";
+    var keep = {
+      stand: 1,
+      sit: 1,
+      lie: 1,
+      sleep: 1,
+      sick: 1,
+      dead: 1,
+      punish: 1,
+      "punish-stand": 1,
+    };
+    g.sticker = keep[raw.sticker] ? String(raw.sticker) : "stand";
     var fallback = spots[g.spot] || spots.rug || spots.door;
     g.x = Number(raw.x != null ? raw.x : fallback.x);
     g.y = Number(raw.y != null ? raw.y : fallback.y);
     return g;
+  }
+
+  function persistSticker(kind) {
+    var keep = {
+      stand: 1,
+      sit: 1,
+      lie: 1,
+      sleep: 1,
+      sick: 1,
+      dead: 1,
+      punish: 1,
+      "punish-stand": 1,
+    };
+    return keep[kind] ? kind : "stand";
   }
 
   function fromSave(data) {
@@ -159,7 +179,7 @@
           name: g.name,
           place: g.place,
           spot: g.spot,
-          sticker: g.sticker === "walk" || g.sticker === "eat" || g.sticker === "run" || g.sticker === "pant" || g.sticker === "bow" ? "stand" : g.sticker,
+          sticker: persistSticker(g.sticker),
           x: g.x,
           y: g.y,
         };

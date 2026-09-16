@@ -12,6 +12,7 @@
     HEALTH_CLEAN_LOW: 0.3,
     HEALTH_SICK: 0.8,
     HUNGER_LOW: 20.0,
+    HEALTH_LOW: 20.0,
     CLEAN_LOW: 20.0,
     SICK_HUNGER: 30.0,
     SICK_CLEAN: 30.0,
@@ -353,6 +354,16 @@
     } else if (kind === "pet") {
       v.mood += T.PET_MOOD;
       events.push("pet");
+    } else if (kind === "scold") {
+      v.mood -= 12;
+      events.push("scolded");
+    } else if (kind === "timeout") {
+      v.mood -= 8;
+      v.hunger -= 4;
+      events.push("timeout");
+    } else if (kind === "ignore") {
+      v.mood -= 6;
+      events.push("ignored");
     } else {
       events.push("denied");
       return events;

@@ -47,6 +47,13 @@ UPRIGHT = [
     "pant-b.png",
     "bow-a.png",
     "bow-b.png",
+    "drag.png",
+    "wipe.png",
+    "play.png",
+    "punish.png",
+    "punish-stand.png",
+    "plead.png",
+    "leave.png",
 ]
 
 

@@ -266,10 +266,18 @@ body {
   animation: none;
 }
 
+.girl.wide {
+  width: var(--girl-lie-w, 16%);
+}
+
+.girl.sick .girl-breath,
+.girl.dead .girl-breath {
+  animation: none;
+}
+
 .girl.dead {
   animation: none;
-  transform: translate(-50%, -70%) rotate(78deg);
-  opacity: 0.85;
+  opacity: 1;
   cursor: default;
 }
 

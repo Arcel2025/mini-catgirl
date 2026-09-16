@@ -60,6 +60,8 @@
     pinHerMini: document.getElementById("pin-her-mini"),
   };
 
+  var drivePhase = 0;
+  var flashTimer = 0;
   var STEP_MS = 280;
   var RUN_STEP_MS = 120;
   var PANT_FRAME_MS = 170;
@@ -71,6 +73,16 @@
     lieClosed: "assets/lie-closed.png?v=1",
     lieGlance: "assets/lie-glance.png?v=1",
     bow: "assets/bow-a.png?v=1",
+    wipe: "assets/wipe.png?v=st1",
+    play: "assets/play.png?v=st1",
+    drag: "assets/drag.png?v=st1",
+    sleep: "assets/sleep.png?v=st1",
+    sick: "assets/sick.png?v=st1",
+    dead: "assets/dead.png?v=st1",
+    punish: "assets/punish.png?v=st1",
+    "punish-stand": "assets/punish-stand.png?v=st1",
+    plead: "assets/plead.png?v=st1",
+    leave: "assets/leave.png?v=st1",
   };
   var WALK_CYCLE = [
     "assets/walk-1.png?v=pad1",
@@ -89,9 +101,9 @@
   var SIT_CYCLE = ["assets/sit.png?v=head1", "assets/sit-b.png?v=head1"];
   var TAIL_FRAME_MS = 1700;
   var BOWL = {
-    empty: "assets/bowl-empty.png?v=bowl2",
-    full: "assets/bowl-full.png?v=bowl2",
-    pour: "assets/bowl-pour.png?v=bowl2",
+    empty: "assets/bowl-empty.png?v=bowl3",
+    full: "assets/bowl-full.png?v=bowl3",
+    pour: "assets/bowl-pour.png?v=bowl3",
   };
   var MEAL_HUNGER = 40;
   function preloadSrc(src) {
@@ -145,6 +157,28 @@
     return save && save.life_phase === "alive" && save.vitals.hunger < Life.T.HUNGER_LOW;
   }
 
+  function tooSick() {
+    return save && save.life_phase === "alive" && save.vitals.health < Life.T.HEALTH_LOW && !starving();
+  }
+
+  function wideKind(kind) {
+    return kind === "lie" || kind === "sick" || kind === "dead";
+  }
+
+  function clearFlash() {
+    if (flashTimer) {
+      window.clearTimeout(flashTimer);
+      flashTimer = 0;
+    }
+  }
+
+  function restPose() {
+    if (!save || save.life_phase === "dead") return "dead";
+    if (starving()) return "lie";
+    if (tooSick()) return "sick";
+    return "stand";
+  }
+
   function stopTail() {
     tailToken += 1;
     if (tailTimer) {
@@ -184,6 +218,9 @@
     els.girl.classList.toggle("sitting", kind === "sit");
     els.girl.classList.toggle("eating", kind === "eat");
     els.girl.classList.toggle("starving", kind === "lie");
+    els.girl.classList.toggle("sleeping", kind === "sleep");
+    els.girl.classList.toggle("sick", kind === "sick");
+    els.girl.classList.toggle("wide", wideKind(kind));
     els.bowl.classList.toggle("away", kind === "eat" && house.view === house.bowl.place);
     if (kind === "lie") {
       stopTail();
@@ -199,21 +236,49 @@
     els.girlImg.src = STICKERS[kind] || STICKERS.stand;
   }
 
-  function applyHungerPose() {
+  function applyVitalPose() {
     if (!save || moving || drag || bowlDrag || Date.now() < eatingUntil) return;
-    if (save.life_phase === "dead") {
-      els.girl.classList.remove("starving");
+    if (drivePhase) return;
+    var g = girl();
+    if (
+      g.sticker === "eat" ||
+      g.sticker === "walk" ||
+      g.sticker === "run" ||
+      g.sticker === "pant" ||
+      g.sticker === "bow" ||
+      g.sticker === "wipe" ||
+      g.sticker === "play" ||
+      g.sticker === "drag" ||
+      g.sticker === "punish" ||
+      g.sticker === "punish-stand" ||
+      g.sticker === "plead" ||
+      g.sticker === "leave"
+    ) {
       return;
     }
-    var g = girl();
-    if (g.sticker === "eat" || g.sticker === "walk" || g.sticker === "run" || g.sticker === "pant" || g.sticker === "bow") return;
     if (wantsMeal()) return;
+    if (save.life_phase === "dead") {
+      if (g.sticker !== "dead") {
+        clearFlip();
+        setSticker("dead");
+      }
+      return;
+    }
     if (starving()) {
       if (g.sticker !== "lie") {
         clearFlip();
         setSticker("lie");
       }
-    } else if (g.sticker === "lie") {
+      return;
+    }
+    if (tooSick()) {
+      if (g.sticker !== "sick") {
+        clearFlip();
+        setSticker("sick");
+      }
+      return;
+    }
+    if (g.sticker === "lie" || g.sticker === "sick" || g.sticker === "dead") {
       clearFlip();
       setSticker("stand");
     }
@@ -338,10 +403,13 @@
     lastPoseAt = Date.now();
     var g = girl();
     if (g.sticker === "walk" || g.sticker === "eat" || g.sticker === "run" || g.sticker === "pant" || g.sticker === "bow") g.sticker = "stand";
+    if (save.life_phase === "dead") g.sticker = "dead";
     moving = false;
     eatingUntil = 0;
     pouring = false;
     bowlDrag = null;
+    drivePhase = 0;
+    clearFlash();
     stopPlead();
     seekGen += 1;
     els.bowl.classList.remove("dragging");
@@ -400,6 +468,7 @@
       "她听不见",
       "现在不用救",
       "哗——粮倒进去了",
+      "她离开这间屋子了",
     ];
     var i;
     for (i = 0; i < keys.length; i++) if (text.indexOf(keys[i]) === 0) return true;
@@ -490,11 +559,17 @@
     return "tone-empty";
   }
 
-  function paintBar(em, numEl, value) {
+  function paintBar(em, numEl, value, healthBar) {
     var n = pct(value);
     em.style.width = n + "%";
     numEl.textContent = n;
     em.classList.remove("tone-hi", "tone-ok", "tone-low", "tone-empty");
+    if (healthBar) {
+      if (n >= 40) em.classList.add("tone-ok");
+      else if (n >= 10) em.classList.add("tone-low");
+      else em.classList.add("tone-empty");
+      return;
+    }
     em.classList.add(toneClass(n));
   }
 
@@ -503,7 +578,7 @@
     paintBar(els.hunger, els.hungerN, v.hunger);
     paintBar(els.clean, els.cleanN, v.cleanliness);
     paintBar(els.mood, els.moodN, v.mood);
-    paintBar(els.health, els.healthN, v.health);
+    paintBar(els.health, els.healthN, v.health, true);
     paintBar(els.stamina, els.staminaN, v.stamina);
     els.gold.textContent = save.gold + " 金";
     els.time.textContent = formatSaveTime();
@@ -514,7 +589,7 @@
     els.girl.classList.toggle("dead", save.life_phase === "dead");
     els.girl.classList.toggle("eating", girl().sticker === "eat");
     els.girl.classList.toggle("away", !here());
-    applyHungerPose();
+    applyVitalPose();
     if (isPleading()) {
       girl().sticker = "bow";
       els.girl.classList.add("bowing");
@@ -677,7 +752,7 @@
         if (done) done();
         else {
           clearFlip();
-          setSticker(starving() ? "lie" : "stand");
+          setSticker(restPose());
         }
       }
     }
@@ -697,7 +772,7 @@
     if (!here()) {
       moving = false;
       els.girl.classList.remove("panting");
-      setSticker(starving() ? "lie" : "stand");
+        setSticker(restPose());
       persist();
       return;
     }
@@ -731,7 +806,7 @@
         moving = false;
         els.girl.classList.remove("panting");
         clearFlip();
-        setSticker(starving() ? "lie" : "stand");
+        setSticker(restPose());
         persist();
       }
     }
@@ -742,6 +817,7 @@
     var token = ++followGen;
     seekGen += 1;
     stopPlead();
+    drivePhase = 0;
     abortWalk();
     els.girl.classList.remove("walking");
     els.girl.classList.remove("running");
@@ -929,7 +1005,7 @@
         stopPlead();
         moving = false;
         if (wantsMeal() && !needsLeaveToEat()) tryStartMeal();
-        else if (girl().sticker === "bow") setSticker(starving() ? "lie" : "stand");
+        else if (girl().sticker === "bow") setSticker(restPose());
         persist();
         return;
       }
@@ -951,7 +1027,7 @@
       if (!wantsMeal()) {
         moving = false;
         clearFlip();
-        setSticker(starving() ? "lie" : "stand");
+        setSticker(restPose());
         persist();
         return;
       }
@@ -989,7 +1065,18 @@
     if (pouring || bowlDrag || drag || moving || isPleading() || Date.now() < eatingUntil) return;
     if (!wantsMeal()) return;
     var g = girl();
-    if (g.sticker === "eat" || g.sticker === "run" || g.sticker === "pant" || g.sticker === "bow" || g.sticker === "walk") return;
+    if (
+      g.sticker === "eat" ||
+      g.sticker === "run" ||
+      g.sticker === "pant" ||
+      g.sticker === "bow" ||
+      g.sticker === "walk" ||
+      g.sticker === "punish" ||
+      g.sticker === "punish-stand" ||
+      g.sticker === "plead" ||
+      g.sticker === "leave"
+    )
+      return;
     if (needsLeaveToEat()) {
       if (here()) startPleadThenSeek();
       return;
@@ -1060,10 +1147,27 @@
   }
 
   function idleBusy() {
-    if (!save || moving || drag || bowlDrag || pouring || isPleading()) return true;
-    if (save.life_phase === "dead" || starving() || Date.now() < eatingUntil) return true;
+    if (!save || moving || drag || bowlDrag || pouring || isPleading() || drivePhase) return true;
+    if (save.life_phase === "dead" || starving() || tooSick() || Date.now() < eatingUntil) return true;
     var kind = girl().sticker;
-    return kind === "eat" || kind === "lie" || kind === "pant" || kind === "run" || kind === "bow" || kind === "walk";
+    return (
+      kind === "eat" ||
+      kind === "lie" ||
+      kind === "sick" ||
+      kind === "dead" ||
+      kind === "sleep" ||
+      kind === "pant" ||
+      kind === "run" ||
+      kind === "bow" ||
+      kind === "walk" ||
+      kind === "wipe" ||
+      kind === "play" ||
+      kind === "drag" ||
+      kind === "punish" ||
+      kind === "punish-stand" ||
+      kind === "plead" ||
+      kind === "leave"
+    );
   }
 
   function wander() {
@@ -1089,13 +1193,21 @@
   }
 
   function poseShift() {
-    if (idleBusy()) return;
+    var cur = girl().sticker;
+    if (cur !== "sleep" && idleBusy()) return;
+    if (cur === "sleep") {
+      if (!save || moving || drag || bowlDrag || pouring || isPleading() || drivePhase) return;
+      if (save.life_phase === "dead" || starving() || tooSick() || Date.now() < eatingUntil) return;
+    }
     if (girl().place !== house.view) return;
     if (wantsMeal()) return;
     if (Date.now() - lastPoseAt < POSE_MS) return;
     lastPoseAt = Date.now();
     clearFlip();
-    setSticker(girl().sticker === "sit" ? "stand" : "sit");
+    var next = "sit";
+    if (cur === "sit") next = "sleep";
+    else if (cur === "sleep") next = "stand";
+    setSticker(next);
     persist();
   }
 
@@ -1110,7 +1222,7 @@
       persist();
       return;
     }
-    if (starving() || girl().sticker === "lie") {
+    if (starving() || girl().sticker === "lie" || tooSick() || girl().sticker === "sick") {
       sheSays("......");
       persist();
       return;
@@ -1130,6 +1242,16 @@
       persist();
       return;
     }
+    if (girl().sticker === "sleep") {
+      sheSays("还在睡。");
+      persist();
+      return;
+    }
+    if (girl().sticker === "punish" || girl().sticker === "punish-stand") {
+      sheSays("还在罚。");
+      persist();
+      return;
+    }
     if (girl().sticker === "sit") {
       sheSays("已经坐着了喵。");
       persist();
@@ -1137,6 +1259,8 @@
     }
     abortWalk();
     moving = false;
+    drivePhase = 0;
+    clearFlash();
     lastPoseAt = Date.now();
     lastWanderAt = Date.now();
     clearFlip();
@@ -1157,7 +1281,7 @@
       persist();
       return;
     }
-    if (starving() || girl().sticker === "lie") {
+    if (starving() || girl().sticker === "lie" || tooSick() || girl().sticker === "sick") {
       sheSays("......");
       persist();
       return;
@@ -1184,6 +1308,8 @@
     }
     abortWalk();
     moving = false;
+    drivePhase = 0;
+    clearFlash();
     lastPoseAt = Date.now();
     lastWanderAt = Date.now();
     clearFlip();
@@ -1193,10 +1319,98 @@
     render(false);
   }
 
+  function flashSticker(kind, ms) {
+    clearFlash();
+    clearFlip();
+    setSticker(kind);
+    persist();
+    render(false);
+    flashTimer = window.setTimeout(function () {
+      flashTimer = 0;
+      if (!save || girl().sticker !== kind) return;
+      clearFlip();
+      setSticker(restPose());
+      persist();
+      render(false);
+    }, ms);
+  }
+
+  function punishNow(kind, sticker, line) {
+    if (!save || save.life_phase === "dead") {
+      setLine("她不动了。");
+      persist();
+      return;
+    }
+    if (!here()) {
+      setLine("她听不见。");
+      persist();
+      return;
+    }
+    if (!act(kind, line, "等一等喵。")) return;
+    drivePhase = 0;
+    clearFlash();
+    if (!sticker) return;
+    abortWalk();
+    moving = false;
+    lastPoseAt = Date.now();
+    clearFlip();
+    setSticker(sticker);
+    persist();
+    render(false);
+  }
+
+  function askDrive() {
+    if (!save || save.life_phase === "dead") {
+      setLine("她不动了。");
+      persist();
+      return;
+    }
+    if (!here()) {
+      setLine("她听不见。");
+      persist();
+      return;
+    }
+    if (drivePhase === 0) {
+      abortWalk();
+      moving = false;
+      stopPlead();
+      clearFlash();
+      drivePhase = 1;
+      lastPoseAt = Date.now();
+      clearFlip();
+      setSticker("plead");
+      sheSays("不要赶喵……留下。");
+      persist();
+      render(false);
+      return;
+    }
+    if (drivePhase !== 1) return;
+    drivePhase = 2;
+    abortWalk();
+    moving = true;
+    clearFlip();
+    setSticker("leave");
+    sheSays("……走了。");
+    persist();
+    render(false);
+    var dest = House.otherPlace(girl().place);
+    window.setTimeout(function () {
+      moving = false;
+      drivePhase = 0;
+      putInPlace(dest, dest === "living" ? "rug" : "center");
+      setSticker("stand");
+      persist();
+      render(true);
+      if (!here()) setLine("她离开这间屋子了。");
+      else sheSays("被赶到这儿了。");
+    }, 1600);
+  }
+
   function onPointerDown(ev) {
     if (save.life_phase === "dead" || !here()) return;
     ev.preventDefault();
     abortWalk();
+    clearFlash();
     els.girl.setPointerCapture(ev.pointerId);
     var rect = els.scene.getBoundingClientRect();
     var g = girl();
@@ -1205,6 +1419,7 @@
       startX: ev.clientX,
       startY: ev.clientY,
       moved: false,
+      keepSleep: g.sticker === "sleep",
       ox: ((ev.clientX - rect.left) / rect.width) * 100 - g.x,
       oy: ((ev.clientY - rect.top) / rect.height) * 100 - g.y,
     };
@@ -1224,18 +1439,12 @@
     if (Math.abs(nx - g.x) > 0.4) {
       els.girlImg.style.transform = nx > g.x ? "scaleX(-1)" : "scaleX(1)";
     }
-    if (!starving()) {
-      if (!drag.stepping) {
-        drag.stepping = true;
-        els.girl.classList.add("walking");
-        g.sticker = "walk";
-        drag.frame = 0;
-        els.girlImg.src = WALK_CYCLE[0];
-      } else if (!drag.lastStep || ev.timeStamp - drag.lastStep > STEP_MS) {
-        drag.frame = ((drag.frame || 0) + 1) % WALK_CYCLE.length;
-        els.girlImg.src = WALK_CYCLE[drag.frame];
-        drag.lastStep = ev.timeStamp;
-      }
+    if (starving() || drag.keepSleep || girl().sticker === "sick") {
+      /* 睡、饿趴、病态拖着不换走帧 */
+    } else if (g.sticker !== "drag") {
+      stopTail();
+      g.sticker = "drag";
+      els.girlImg.src = STICKERS.drag;
     }
     g.x = nx;
     g.y = ny;
@@ -1246,13 +1455,14 @@
     if (!drag || ev.pointerId !== drag.id) return;
     els.girl.classList.remove("dragging");
     var wasDrag = drag.moved;
+    var keepSleep = drag.keepSleep;
     drag = null;
     if (!wasDrag) {
       els.girl.classList.remove("walking");
       els.girl.classList.remove("running");
-      if (girl().sticker === "walk" || girl().sticker === "run" || girl().sticker === "pant") {
+      if (girl().sticker === "walk" || girl().sticker === "run" || girl().sticker === "pant" || girl().sticker === "drag") {
         els.girl.classList.remove("panting");
-        setSticker(starving() ? "lie" : "stand");
+        setSticker(restPose());
       }
       pet();
       return;
@@ -1262,17 +1472,30 @@
     els.girl.classList.remove("walking");
     moving = false;
     clearFlip();
-    if (starving()) setSticker("lie");
-    else setSticker("stand");
+    if (keepSleep) setSticker("sleep");
+    else setSticker(restPose());
     persist();
     tryStartMeal();
   }
 
   document.getElementById("btn-sit").addEventListener("click", askSit);
   document.getElementById("btn-stand").addEventListener("click", askStand);
-  document.getElementById("btn-wash").addEventListener("click", function () {
-    act("wash", "项圈……不摘喵。", "等一等喵。");
+  document.getElementById("btn-play").addEventListener("click", function () {
+    if (act("play", "嘿嘿……好玩。", "等一等喵。")) flashSticker("play", 2800);
   });
+  document.getElementById("btn-wash").addEventListener("click", function () {
+    if (act("wash", "项圈……不摘喵。", "等一等喵。")) flashSticker("wipe", 2800);
+  });
+  document.getElementById("btn-scold").addEventListener("click", function () {
+    punishNow("scold", "punish", "……委屈的喵。");
+  });
+  document.getElementById("btn-timeout").addEventListener("click", function () {
+    punishNow("timeout", "punish-stand", "站着……喵。");
+  });
+  document.getElementById("btn-ignore").addEventListener("click", function () {
+    punishNow("ignore", null, "……");
+  });
+  document.getElementById("btn-drive").addEventListener("click", askDrive);
   document.getElementById("btn-med").addEventListener("click", function () {
     act("medicine", "苦苦的……但人让吃。", "等一等喵。");
   });
