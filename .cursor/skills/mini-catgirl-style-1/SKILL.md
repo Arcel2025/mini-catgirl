@@ -186,7 +186,7 @@ KEYBOARD NAP. Camera pulled back over a real adult desk at night. A FULL-SIZE co
 GIANT TAKEOUT CHICKEN. Camera pulled back. Same girl-to-keyboard SCALE as the keyboard-nap example; a full-size keyboard sits behind her as a ruler. She is 20cm, sitting on a miniature wooden stool. TWO large adult takeout boxes of fried chicken and rice flank her, each about her sitting size or bigger. Fried chicken stays restaurant-sized: drumsticks in the boxes nearly as tall as she sits. She holds one drumstick with both stubby hands and nibbles; the piece reaches her face. Eyes closed, happy. Do not shrink the chicken. Do not enlarge her to fill the frame.
 ```
 
-第一人称成人手：迷你猫娘约 20cm，整段身子大约等于一只成人手（腕到指尖）。头大约一只拳头。两指就能拎起来。不要画成手掌那么大。端箱锁 `example-box-held-v1.png`。倒箱锁 `example-box-fallen-v1.png`。趴键盘锁 `example-keyboard-sleep-v1.png`。啃鸡锁 `example-takeout-chicken-v1.png`。桌小等其余动作锁图见 [poses.md](poses.md)。趴枕、捧脸见 [第一视角](../mini-catgirl-pov/SKILL.md)。台灯写字见 [台灯写字](../mini-catgirl-desk-write/SKILL.md)。馋嘴见 [馋嘴](../mini-catgirl-hungry/SKILL.md)。
+第一人称成人手：迷你猫娘约 20cm，整段身子大约等于一只成人手（腕到指尖）。头大约一只拳头。两指就能拎起来。不要画成手掌那么大。端箱锁 `example-box-held-v1.png`。倒箱锁 `example-box-fallen-v1.png`。趴键盘锁 `example-keyboard-sleep-v1.png`。啃鸡锁 `example-takeout-chicken-v1.png`。桌小等其余动作锁图见 [poses.md](poses.md)。趴枕、捧脸、掌心伸懒腰见 [第一视角](../mini-catgirl-pov/SKILL.md)。台灯写字见 [台灯写字](../mini-catgirl-desk-write/SKILL.md)。馋嘴见 [馋嘴](../mini-catgirl-hungry/SKILL.md)。
 
 ## QA
 

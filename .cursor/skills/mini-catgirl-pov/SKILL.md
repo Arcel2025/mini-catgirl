@@ -2,10 +2,9 @@
 name: mini-catgirl-pov
 description: >-
   Generates mini catgirl illustrations in the first-person touch lane:
-  she lies on an adult pillow looking up at "you", or your adult hands
-  cup her dumpling cheeks. Default look is 风格Ⅰ. Use when the user
-  第一视角, 趴枕, 趴枕头, 捧脸, 捏脸, 成人手, or 人和猫娘互动.
-  Never write brand names into image prompts.
+  趴枕, 捧脸, or 掌心伸懒腰. Default look is 风格Ⅰ. Use when the user
+  第一视角, 趴枕, 捧脸, 捏脸, 掌心伸懒腰, 掌心打哈欠, 人手上伸懒腰,
+  or 成人手. Never write brand names into image prompts.
 ---
 
 # 迷你猫娘第一视角
@@ -14,7 +13,7 @@ description: >-
 
 从别人的平涂 AI 图只蒸馏镜头和动作。脸、衣服、光跟风格Ⅰ / 角色定稿。小红书截图、水印图不要进 `examples/`，也不要当 `reference_image_paths`。
 
-两条都已点头。出哪套就锁哪张，不要重出那张肖像。钉的是动作，不是那张脸。
+三条都已点头。出哪套就锁哪张，不要重出那张肖像。钉的是动作，不是那张脸。枕走 **趴枕**。捧脸、捏脸走 **捧脸**。伸懒腰、打哈欠、掌心走 **掌心伸懒腰**。不要叠一张。
 
 尺度跟风格Ⅰ：约 20cm，整只 ≈ 一只成人手长，头 ≈ 一只拳头。兽只留猫耳、猫尾。耳只长头顶，两侧不要人耳。没说就婴儿肉手，3～4 短圆指。双手端箱、床上倒箱见 [风格Ⅰ](../mini-catgirl-style-1/SKILL.md)。
 
@@ -49,10 +48,28 @@ description: >-
 
 换角色：定稿占一张锁动作，另一张给她自己的定稿。衣服、头发跟那只猫娘。手、脸肉变形、眯眼不要改。
 
+## 定稿：掌心伸懒腰
+
+[examples/example-palm-stretch.png](examples/example-palm-stretch.png)
+
+调用名 **掌心伸懒腰**。已点头。出这套就锁这张。
+
+| 钉什么 | 怎么认 | 不要学成 |
+| --- | --- | --- |
+| 镜头 | 第一人称低头看自己的一只掌心。9:16 | 第三人称她坐旁边；看见成人脸；1:1 脸特写 |
+| 手 | 一只成人手掌心朝上托着她，手指在画面下沿 | 两只手捧脸；手里端着纸箱 |
+| 身 | 坐在掌心中央。头到脚大约一掌长。头 ≈ 拳头 | 和手掌一样大的小孩；端箱那种沿口以下探头 |
+| 动作 | 双臂上举。她的右手握拳，左手张开。同时打哈欠 | 闭眼安睡蜷着；wow 笑着举手 |
+| 脸 | 半眼，嘴张成大哈欠椭圆，两团腮红。可带一点哈欠泪 | 圆 wow 嘴；眯眼开心；睡着 |
+| 发 | 棉花长绒摊在掌上 | 坐在头发凳上 |
+
+换角色：定稿占一张锁动作，另一张给她自己的定稿。掌心、举手、哈欠不要改。衣服头发跟那只猫娘。
+
 ## 例图
 
 - [examples/example-pillow.png](examples/example-pillow.png) 趴枕定稿。已点头
 - [examples/example-cheeks.png](examples/example-cheeks.png) 捧脸定稿。已点头
+- [examples/example-palm-stretch.png](examples/example-palm-stretch.png) 掌心伸懒腰定稿。已点头
 
 出图 `reference_image_paths` 最多两张：本条定稿 + 角色定稿。同一只棉花坐可以定稿 + 一张风格Ⅰ例图。不要带小红书原图。不要带界面截图。路径用英文目录，中文路径会 400。
 
@@ -60,10 +77,11 @@ description: >-
 
 1. 趴枕定稿：`examples/example-pillow.png`。
 2. 捧脸定稿：`examples/example-cheeks.png`。
-3. 换角色时第二张拷成 `tmp-idle.jpg`。同一只棉花坐：定稿 + 风格Ⅰ例图即可。
-4. 小红书原图、带水印、带箭头的标注只给人看，不当参考。
+3. 掌心伸懒腰定稿：`examples/example-palm-stretch.png`。
+4. 换角色时第二张拷成 `tmp-idle.jpg`。同一只棉花坐：定稿 + 风格Ⅰ例图即可。
+5. 小红书原图、带水印、带箭头的标注只给人看，不当参考。
 
-趴枕时不要再逼「坐在自己的头发上」。头发仍是棉花长绒，摊在枕和床单上。
+趴枕时头发摊在枕和床单上。掌心伸懒腰时头发摊在掌上。都不要坐头发凳。
 
 ## 英文模板
 
@@ -136,19 +154,36 @@ CAMERA: first-person close-up of her face and your hands. Warm real bedroom behi
 
 默认表情是眯眼开心。另抽才换：半眼看你 / 眼瞟旁边。手、尺度、脸肉变形不动。
 
+### 掌心伸懒腰 `{SUBJECT}`
+
+```
+PALM YAWN-STRETCH. FIRST-PERSON: you look down at YOUR OWN huge adult open palm filling the lower frame. The 20cm mini catgirl sits in the CENTER of the palm. Head-to-toe about as long as the palm. Peak just-woke-up stretch: both stubby arms thrown straight up, HER right hand a tiny fist, HER left hand open. Spine arched. Mouth a large oval YAWN, not a tiny wow O, not a smile. Half-lidded sleepy eyes, inner brows down, heavy blush, maybe one yawn-tear. Cotton hair messy from sleep, pooling on the palm, not a hair stool. Pink sneakers planted on the skin. Thick fluffy tail on the palm beside her. Warm morning window light. NO cardboard box. NO towel nest. No adult face or torso.
+```
+
+### 掌心伸懒腰 `{CAMERA}`
+
+```
+CAMERA: first-person looking down at your palm. Vertical 9:16. Character centered slightly low. A real bedroom you can walk into, morning window, plants. One mini character only. No adult face. No UI, no watermark, no text.
+```
+
+默认表情是半眼打哈欠。没点名不要改成 wow 或睡着。
+
 ## 每次开跑
 
 ```
 - [ ] 读人设 + 风格Ⅰ + 本文件
+- [ ] 按用户词选一条：枕 → 趴枕；捧脸/捏脸 → 捧脸；伸懒腰/打哈欠/掌心 → 掌心伸懒腰
 - [ ] 趴枕：锁 example-pillow。已点头，不要重出这张
 - [ ] 趴枕提示词：下巴压近侧枕，短臂扒枕，腿藏后面，尾巴竖着，睁眼看你。禁止 lying on the bed / full-body prone
 - [ ] 捧脸：锁 example-cheeks。已点头，不要重出这张
 - [ ] 捧脸提示词：整掌从下方包住；两坨脸肉挤变形鼓出来；眯眼开心。禁止 two fingertips poke；禁止脸不变形只贴腮红
+- [ ] 掌心伸懒腰：锁 example-palm-stretch。已点头，不要重出这张
+- [ ] 掌心伸懒腰提示词：一只掌心托着；双臂上举，右拳左掌；半眼大哈欠。禁止 wow 笑；禁止纸箱；禁止坐头发凳
 - [ ] 一张定稿 + 一张角色定稿。默认棉花坐
 - [ ] 不要两套动作叠一张
 - [ ] 不要把小红书原图塞进 reference_image_paths
 - [ ] 提示词写清枕头比她大 / 成人手比她头大，不写品牌名
-- [ ] 1:1，除非用户要 9:16
+- [ ] 趴枕、捧脸默认 1:1。掌心伸懒腰默认 9:16
 ```
 
 ## QA
@@ -156,7 +191,8 @@ CAMERA: first-person close-up of her face and your hands. Warm real bedroom behi
 1. 趴枕跟定稿：下巴压近侧枕，短臂扒枕，腿藏后面，尾巴竖着，睁眼看你。不是鸟瞰整只趴上去
 2. 捧脸跟定稿：手从下方整掌包住；两坨脸肉挤变形鼓出来；眯眼开心
 3. 捧脸不是她自己捧自己；不是两指戳腮；不是平面腮红
-4. 她约 20cm：头 ≈ 拳头；枕头是成人枕；捧脸时成人手明显更大
-5. 人身，耳只长头顶；婴儿肉手；刘海压眉，侧发盖住人耳
-6. 背景是卧室这种能走进去的地方，不是纯色粉墙
-7. 没有 UI、没有水印
+4. 掌心伸懒腰跟定稿：一只掌心托着；双臂上举，右拳左掌；半眼打哈欠。不是 wow，不是睡着，不是纸箱
+5. 她约 20cm：头 ≈ 拳头；枕头是成人枕；捧脸和掌心时成人手明显更大
+6. 人身，耳只长头顶；婴儿肉手；刘海压眉，侧发盖住人耳
+7. 背景是卧室这种能走进去的地方，不是纯色粉墙
+8. 没有 UI、没有水印
