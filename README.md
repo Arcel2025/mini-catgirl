@@ -10,6 +10,7 @@ Skill基本源自于星野之前的历史素材，不管是 /不赖 的还是我
 
 - **人设**：[mini-beast-girl](.cursor/skills/mini-beast-girl/SKILL.md)。她是谁、怎么动、怎么回话。
 - **出图·风格Ⅰ**：[迷你猫娘风格Ⅰ](.cursor/skills/mini-catgirl-style-1/SKILL.md)。我调试过的最接近迷你猫娘人设的画风，偏卡通。
+- **出图·动感**：[迷你猫娘·动感](.cursor/skills/mini-catgirl-motion/SKILL.md)。静帧上的抖动、残影、飞出物。埋脸吃当尺子。
 - **出图·风格Ⅱ**：[迷你猫娘风格Ⅱ](.cursor/skills/mini-catgirl-style-2/SKILL.md)。基因更接近正常猫娘幼仔的迷你猫娘。
 - **出图·雨箱**：[迷你猫娘·雨箱](.cursor/skills/mini-catgirl-rainbox/SKILL.md)。夜雨，全身或躲进纸箱。
 - **出图·厚涂**：[迷你猫娘·厚涂](.cursor/skills/mini-catgirl-impasto/SKILL.md)。电影光、喷枪体积。兽只留猫耳、猫爪、猫尾。

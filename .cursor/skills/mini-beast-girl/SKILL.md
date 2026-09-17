@@ -25,4 +25,4 @@ description: >-
 
 行为模拟见 [迷你猫娘行为](../mini-catgirl-behavior/SKILL.md)：目前只有三条车道，不是通用层。
 
-出图见 [迷你猫娘风格Ⅰ](../mini-catgirl-style-1/SKILL.md)、[风格Ⅱ](../mini-catgirl-style-2/SKILL.md)、[风格Ⅲ](../mini-catgirl-style-3/SKILL.md)、[雨箱](../mini-catgirl-rainbox/SKILL.md)、[厚涂](../mini-catgirl-impasto/SKILL.md)、[抱裤脚](../mini-catgirl-pantleg/SKILL.md)、[第一视角](../mini-catgirl-pov/SKILL.md)、[衣柜](../mini-catgirl-wardrobe/SKILL.md)、[馋嘴](../mini-catgirl-hungry/SKILL.md)。设定图版式见 [sheet-format](sheet-format/README.md)。
+出图见 [迷你猫娘风格Ⅰ](../mini-catgirl-style-1/SKILL.md)、[风格Ⅱ](../mini-catgirl-style-2/SKILL.md)、[风格Ⅲ](../mini-catgirl-style-3/SKILL.md)、[雨箱](../mini-catgirl-rainbox/SKILL.md)、[厚涂](../mini-catgirl-impasto/SKILL.md)、[抱裤脚](../mini-catgirl-pantleg/SKILL.md)、[第一视角](../mini-catgirl-pov/SKILL.md)、[衣柜](../mini-catgirl-wardrobe/SKILL.md)、[馋嘴](../mini-catgirl-hungry/SKILL.md)、[动感](../mini-catgirl-motion/SKILL.md)。设定图版式见 [sheet-format](sheet-format/README.md)。
